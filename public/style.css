@@ -1,0 +1,622 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+:root {
+    --text-anim-color: white;
+}
+
+body {
+    margin: 0;
+}
+
+button {
+    cursor: pointer;
+}
+
+@keyframes show {
+    0% {height: 0}
+    100% {height: 340px}
+}
+
+@keyframes textShadowRotate {
+    16.66% {
+        text-shadow: 1px 1px 15px #FF2A2A;
+    }
+
+    33.32% {
+        text-shadow: -15px 1px 15px #FF2A2A;
+    }
+
+    49.98% {
+        text-shadow: 3px -15px 15px #FF2A2A;
+    }
+
+    66.64% {
+        text-shadow: -15px 3px 15px #FF2A2A;
+    }
+
+    83.33% {
+        text-shadow: -15px -3px 15px #FF2A2A;
+    }
+
+    100% {
+        text-shadow: 1px -3px 15px #FF2A2A;
+    }
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100vw;
+    min-height: 100vh;
+    height: auto;
+    background: #11151c;
+    color: #f8f9fa;
+
+    #logo {
+        width: 340px;
+    }
+}
+
+#info {
+    display: flex;
+    flex-direction: column;
+    width: 740px;
+    
+    h1 {
+        font-family: "Manrope", sans-serif;
+        font-weight: 500;
+        font-size: 20px;
+        margin-bottom: 0;
+    }
+    
+    h2 {
+        font-family: "Inter", sans-serif;
+        font-weight: 400;
+        font-size: 15px;
+        max-width: 740px;
+    }
+}
+
+#main-ctas {
+    display: flex;
+    
+    .cta {
+        height: 40px;
+        width: 170px;
+        font-family: "Inter", sans-serif;
+        font-weight: 700;
+        font-size: 14px;
+        margin-left: 15px;
+        border-radius: 20px;
+        border: none;
+        transition: all 0.3s ease-out;
+
+        &:nth-child(1) {
+            margin-left: 0;
+        }
+
+        &:hover {
+            font-size: 15px;
+            /* animation: textShadowRotate 5s alternate infinite; */
+        }
+    }
+
+    #search-jobs-btn {
+        --text-anim-color: white;
+        background: #3B1F14;
+        color: #FF6B3D;
+        border: solid 1px #B14A2E;
+        text-shadow: 1px 1px 15px #B14A2E;
+
+        &:hover {
+            text-shadow: 1px 1px 15px #FF004D;
+        }
+    }
+
+    #market-overview-btn {
+        background: #111B26;
+        color: #1ECFFF;
+        border: solid 1px #3B7FA1;
+        text-shadow: 1px 1px 15px #3B7FA1;
+
+        &:hover {
+            text-shadow: 1px 1px 15px #00FFF0;
+        }
+    }
+
+    #market-news-btn {
+        background: #0D2B1E;
+        color: #00FF7F;
+        border: solid 1px #2FA36B;
+        text-shadow: 1px 1px 15px #2FA36B;
+
+        &:hover {
+            text-shadow: 1px 1px 15px #C6FF00;
+        }
+    }
+
+    #assistance-btn {
+        background: #3A2E1A;
+        color: #FFE066;
+        border: solid 1px #BFA14A;
+        text-shadow: 1px 1px 15px #BFA14A;
+
+        &:hover {
+            text-shadow: 1px 1px 15px #FFB347;
+        }
+    }
+}
+
+.content-box {
+    /* display: none; */
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px;
+    width: 740px;
+    min-height: 340px;
+    margin-top: 10px;
+    /* animation: show 3s ease; */
+}
+
+#jobs-search {
+    display: flex;
+    background: #2F160D;
+    color: #FF6A3D;
+    border: solid 1px #9A3F28;
+    font-family: "Manrope", sans-serif;
+    font-weight: bold;
+    min-height: 0;
+
+    & > * {
+        flex-shrink: 1;
+        transition: opacity 3s;
+        /* flex-basis: 0; */
+    }
+
+    label {
+        margin-top: 15px;
+
+        &:nth-of-type(1) {
+            margin-top: 0;
+        }
+    }
+
+    input {
+        width: 250px;
+        height: 30px;
+        margin-top: 5px;
+        background: #2A1C16;
+        color: #FF6840;
+        border: solid 1px #8F4A34;
+        border-radius: 4px;
+        padding: 0px 5px;
+
+        &:focus {
+            outline: 1px solid #FF7A00;
+        }
+
+        &::placeholder {
+            color: rgba(255, 104, 64, 0.4);
+            font-style: italic;
+        }
+    }
+
+    #experience-radiobtns {
+        display: flex;
+        align-items: center;
+        margin-top: 20px;
+        
+        input {
+            width: auto;
+            height: auto;
+            margin: 0 3px 0 8px;
+            background: red;
+            accent-color: #FF7A00;
+        }
+
+        label:not(:first-of-type){
+            margin-top: 0;
+            font-family: "Inter", sans-serif;
+            font-size: 12.5px;
+            font-weight: 400;
+        }
+    }
+
+    #job-sites {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        margin-top: 10px;
+
+        #companies {
+            display: grid;
+            grid-template-columns: repeat(5, 70px);
+            align-items: center;
+            justify-items: center;
+
+            .company-logo {
+                cursor: pointer;
+                width: 30px;
+                height: 30px;
+                background-position: center;
+                background-size: 40px;
+                border-radius: 50%;
+                opacity: 0.5;
+                transition: all 0.5s ease;
+                
+                /* set opacity of logo whenever it's being hovered or it has been selected */
+                &:hover, &[class*="selected"] {
+                    opacity: 1;
+                }
+
+                /* set opacity of logo's company name when logo is being hovered */
+                &:hover + .company-name {
+                    opacity: 1;
+                }
+
+                /* set opacity of logo's company name when logo has been selected */
+                &[class*="selected"] + .company-name {
+                    opacity: 1;
+                }
+            }
+    
+            #ejobs {
+                background-image: url('./icons/ejobs-romania-1.svg');
+                grid-column: 1;   
+            }
+    
+            #bestjobs {
+                background-image: url('./icons/bestjobs-1.svg');
+                grid-column: 2;
+            }
+            #hipo {
+                background-image: url('./icons/hipo-1.svg');
+                grid-column: 3;
+            }
+            #undelucram {
+                background-image: url('./icons/undelucram-ro-1.svg');
+                grid-column: 4;
+            }
+
+            #jooble {
+                background-image: url('./icons/jooble-1.svg');
+                grid-column: 5;
+            }
+
+            .company-name {
+                font-size: 11px;
+                margin-top: 3px;
+                opacity: 0.5;
+                transition: all 0.5s ease;
+
+                &:nth-child(2) {
+                    grid-column: 1;
+                    grid-row: 2;
+                }
+
+                &:nth-child(4) {
+                    grid-column: 2;
+                    grid-row: 2;
+                }
+
+                &:nth-child(6) {
+                    grid-column: 3;
+                    grid-row: 2;
+                }
+
+                &:nth-child(8) {
+                    grid-column: 4;
+                    grid-row: 2;
+                }
+
+                &:nth-child(10) {
+                    grid-column: 5;
+                    grid-row: 2;
+                }
+            }
+        }
+    }
+
+    #search-btn {
+        position: relative;
+        width: 100px;
+        height: 30px;
+        background: #3F1A12;
+        color: #FF5A2E;
+        border: solid 1px #B1452B;
+        text-shadow: 1px 1px 15px #B1452B;
+        transition: all 0.5s ease;
+        z-index: 0;
+        font-size: 14px;
+        font-weight: 700;
+
+        &::after {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: #FF5A2E;
+            transition: width 0.3s ease;
+            z-index: -1;
+        }
+
+        &:hover::after {
+            width: 100%;
+        }
+
+        &:hover {
+            color: #3F1A12;
+        }
+    }
+
+    #results {
+        display: none;
+        flex-direction: row;
+        margin-top: 15px;
+
+        #scraper-comms {
+            margin: 0;
+            font-family: "Inter", sans-serif;
+            font-weight: 300;
+            font-size: 13px;
+            line-height: 20px;
+        }
+
+        a {
+            display: none;
+            width: 120px;
+            height: 20px;
+            margin-left: 10px;
+            border-radius: 5px;
+            background: #402100;
+            color: #FF7A00;
+            border: solid 1px #C75A1A;
+            font-size: 11px;
+            font-weight: 600;
+            font-family: "Inter", sans-serif;
+            text-align: center;
+            text-decoration: none;
+            margin-left: 15px;
+            line-height: 18px;
+        }
+    }
+}
+
+/* #jobs-overview {
+    background: #0B1C2D;
+    color: #00AFFF;
+    border: solid 1px #2F6FA3;
+}
+
+#jobs-news {
+    background: #071A10;
+    color: #14FF8A;
+    border: solid 1px #3A9F6B;
+}
+
+#jobs-help {
+    background: #2B1A0F;
+    color: #FF9F1C;
+    border: solid 1px #B36A2E;
+} */
+
+#jobs-search.show, #jobs-overview.show, #jobs-news.show, #jobs-help.show {
+    display: flex;
+}
+
+/* .input-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    width: 740px;
+
+    #default-prompts {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+
+        button {
+            width: 360px;
+            height: 30px;
+            font-size: 12.5px;
+            font-family: "Inter", sans-serif;
+            font-weight: 500;
+            border-radius: 15px;
+            background: #1B1E23;
+            color: #FF2E88;
+            border: solid 2px #A1446F;
+        }
+    }
+
+    #prompt {
+        width: 740px;
+        height: 60px;
+        border-radius: 10px;
+        padding: 10px 20px;
+        font-size: 18px;
+        font-family: "Manrope", sans-serif;
+        font-weight: 500;
+        font-optical-sizing: auto;
+        background: #0B0C0E;
+        color: #E6E6E6;
+        border: solid 1px #8A8D92;
+        margin-top: 10px;
+    
+        &::placeholder {
+            font-style: italic;
+            padding-bottom: -100px;
+            color: #E6E6E6;
+        }
+    }
+
+    #ask-btn {
+        width: 180px;
+        height: 40px;
+        background: #1D1E20;
+        color: #F7F8FA;
+        border: solid 1px #C7CBD4;
+        border-radius: 5px;
+        font-family: "Inter", sans-serif;
+        font-size: 18px;
+        font-weight: 600;
+        margin-top: 10px;
+    }
+} */
+
+#scraper-content {
+    display: flex;
+    flex-direction: column;
+
+    #ai-prompts {
+        width: 740px;
+        display: none;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        button {
+            width: 360px;
+            height: 30px;
+            font-size: 12px;
+            font-family: "Inter", sans-serif;
+            font-weight: 500;
+            border-radius: 15px;
+            margin-top: 15px;
+        }
+
+        .ai-filters {
+            background: #1B1E23;
+            color: #FF2E88;
+            border: solid 2px #A1446F;
+        }
+
+        #reset-button {
+            display: none;
+            background: #0D2B1E;
+            color: #00FF7F;
+            border: solid 2px #2FA36B;
+        }
+
+        #ai-comms {
+            flex-basis: 100%;
+            font-family: "Inter", sans-serif;
+            font-size: 16px;
+            color: #fffafa;
+            text-align: center;
+            margin-top: 30px;
+            background: #2F160D;
+            padding: 10px;
+            border-radius: 5px;
+            border: dotted 2px #9A3F28;
+            color: #FF6A3D;
+        }
+    } 
+
+    #jobs-found {
+        display: none;
+        grid-template-columns: 338px 338px;
+        gap: 40px 40px;
+        justify-items: center;
+        padding: 10px;
+        border: solid 2px rgba(255, 90, 46, 0.5);
+        border-radius: 5px;
+        overflow: hidden;
+        /* background: rgba(255, 46, 136, 0.05); */
+        /* background: rgba(255, 90, 46, 0.05); */
+
+        .job {
+            position: relative;
+            z-index: 0;
+            display: flex;
+            flex-wrap: wrap;
+            width: 338px;
+            height: auto;
+            min-height: 100px;
+            font-family: "Manrope", sans-serif;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            background: linear-gradient(((at calc(var--mouse--x) * 100%) deg,rgba(154, 31, 69, 1) 0%, rgba(179, 58, 58, 1) 50%, rgba(199, 90, 26, 1) 100%));
+
+            &::before {
+                content: "";
+                position: absolute;
+                inset: 10px;
+                transform: translate(0px, 0px);
+                z-index: -1;
+                background: inherit;
+                filter: blur(35px) opacity(0.7);
+            }
+
+            &::after {
+                content: "";
+                position: absolute;
+                z-index: 1;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                background-color: #FF5A2E;
+                transition: opacity 0.5s ease;
+                opacity: 0;
+                filter: blur(20px);
+                transform-origin: center center;
+            }
+
+            &:hover::after {
+                opacity: 0.2;
+            }
+    
+            a {
+                background: linear-gradient(90deg, rgba(240,248,255,1) 0%, rgba(160,196,255,1) 50%, rgba(70,130,255,1) 100%);
+                color: transparent;
+                background-clip: text;
+                text-decoration: none;
+                z-index: 2;
+                
+                &:nth-child(1) {
+                    font-weight: bold;
+                    flex-basis: 100%;
+                }
+    
+                &:nth-child(3) {
+                    margin-left: 3px;
+                }
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+    
+            span, a:nth-child(3) {
+                font-style: italic;
+                font-size: 14px;
+
+                background: linear-gradient(90deg, rgba(230,230,230,1) 0%, rgba(200,200,210,1) 50%, rgba(170,180,190,1) 100%);
+                color: transparent;
+                background-clip: text;
+            }
+
+            span {
+                font-weight: bold;
+                z-index: 2;
+            }
+
+            a:nth-child(3) {
+                font-weight: 600;
+                padding-right: 1px;
+                z-index: 2;
+            }
+        }
+    }
+}
