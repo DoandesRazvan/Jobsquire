@@ -63,25 +63,43 @@ const ejobsScraper = async (role, locations, experience) => {
         });
     }
 
-    // scraping website for results, repeating if next page is available and closing when no new pages are present
-    // have a way of handling error if only one page is available.
-    while (newPageAvailable) {
-        console.log(pageCounter);
-
-        await page.goto(dynamicUrl);
-
-        // closing cookie pop up the first time the site is opened
+    async function cookieConsenter() {
         if (pageCounter == 1) {
             // Waiting for the cookie consent popup to appear
             await page.waitForSelector(".ejobs-modal");
     
             // Clicking the "Accept" button to accept cookies
             await page.click(".shared-elements-cookies-popup__accept-button");
-
-            await scrollPage();
-        } else {
-            await scrollPage();
         }
+    }
+
+    // scraping website for results, repeating if next page is available and closing when no new pages are present
+    // have a way of handling error if only one page is available.
+    while (newPageAvailable) {
+        console.log(pageCounter);
+
+        console.log(dynamicUrl);
+
+        await page.goto(dynamicUrl);
+
+        // closing cookie pop up the first time the site is opened
+        await cookieConsenter();
+
+        await page.evaluate(async () => {
+            await new Promise((resolve) => {
+                let totalHeight = 0;
+                let distance = 100; // Step size
+                let timer = setInterval(() => {
+                    let scrollHeight = document.body.scrollHeight;
+                    window.scrollBy(0, distance);
+                    totalHeight += distance;
+                    if(totalHeight >= scrollHeight){
+                        clearInterval(timer);
+                        resolve();
+                    }
+                }, 100); // Delay in ms
+            });
+        });
 
         const searchResults = await page.evaluate(() => {
             let jobs = document.querySelectorAll(".job-card-wrapper--visible");
@@ -109,7 +127,7 @@ const ejobsScraper = async (role, locations, experience) => {
         console.log(searchResults.isNextPage);
 
         // pass results into main job array
-        searchResults.jobsFound.forEach((jobArr) => jobsList.push(jobArr));
+        searchResults.jobsFound.forEach((jobObj) => jobsList.push(jobObj));
 
         // check if next page is available
         if (searchResults.isNextPage) {

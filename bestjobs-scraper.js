@@ -51,7 +51,7 @@ const bestjobsScraper = async (role, locations, experience) => {
     // Clicking the "Accept" button to accept cookies
     await page.click("button[data-test-id=cookie-consent-accept]");
 
-    // scrolling naturally to bottom
+    // scrolling naturally to bottom until no new results pop up, and also click the "mai multe job-uri" button if it appears so that every available result is scraped.
     await page.evaluate(async () => {
         await new Promise((resolve) => {
             let totalHeight = 0;
@@ -62,8 +62,6 @@ const bestjobsScraper = async (role, locations, experience) => {
                 totalHeight += distance;
                 if(totalHeight >= scrollHeight){
                     let moreButton = document.querySelector("button.px-5");
-
-                    console.log(moreButton);
 
                     if (moreButton) {
                         moreButton.click();
@@ -80,8 +78,6 @@ const bestjobsScraper = async (role, locations, experience) => {
         let jobs = document.querySelectorAll("a.inset-0");
         let currentUrl = window.location.href;
         let company = "Bestjobs";
-
-        console.log(jobs);
 
         return Array.from(jobs).map(child => {
             let title = child?.ariaLabel || null;

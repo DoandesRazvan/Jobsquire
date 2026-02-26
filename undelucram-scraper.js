@@ -41,8 +41,7 @@ const undelucramScraper = async (role, locations, experience) => {
         return "https://www.undelucram.ro/ro/locuri-de-munca/" + experiencePart + "/" + locationsPart + "/" + rolePart;
     }
 
-    // const url = await createUrl();
-    const url = createUrl();
+    const url = await createUrl();
     let dynamicUrl = url;
     let pageCounter = 1;
 
@@ -97,7 +96,7 @@ const undelucramScraper = async (role, locations, experience) => {
         });
 
         // pass results into main job array
-        searchResults.forEach((jobArr) => jobsList.push(jobArr));
+        searchResults.forEach((jobObj) => jobsList.push(jobObj));
 
         // check if next page is available
         if (pageCounter < noOfPages) {

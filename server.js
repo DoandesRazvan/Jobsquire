@@ -56,7 +56,7 @@ app.post("/jobs", async (req, res) => {
           break;
         case "undelucram":
           results = await undelucramScraper(wantedRole, wantedLocations, wantedExperience);
-          // console.log(results);
+          console.log(results);
           break;
         case "jooble":
           results = await joobleScraper(wantedRole, wantedLocations, wantedExperience);
@@ -88,8 +88,8 @@ app.post("/jobs", async (req, res) => {
   });
 });
 
-app.listen(3000, () => {
-  console.log("Server running on http://localhost:3000");
+app.listen(3001, () => {
+  console.log("Server running on http://localhost:3001");
 });
 
 // scraper();
