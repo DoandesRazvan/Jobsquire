@@ -3,7 +3,7 @@
 import puppeteer from "puppeteer";
 
 const bestjobsScraper = async (role, locations, experience) => {
-    const browser = await puppeteer.launch({headless: false});
+    const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
     // creating the URL based on the user search criteria
@@ -16,19 +16,19 @@ const bestjobsScraper = async (role, locations, experience) => {
         for (let i = 0; i < experience.length; i++) {
             switch (experience[i]) {
                 case "Internship":
-                    experiencePart = experiencePart.concat("fara-experienta,");
+                    experiencePart = experiencePart.concat("no-experience,");
                     break;
                 case "Entry":
-                    experiencePart = experiencePart.concat("entry-0-2-ani,");
+                    experiencePart = experiencePart.concat("entry-level,");
                     break;
                 case "Medium":
-                    experiencePart = experiencePart.concat("middle-2-5-ani,");
+                    experiencePart = experiencePart.concat("mid-level,");
                     break;
                 case "Senior":
-                    experiencePart = experiencePart.concat("senior-5-10-ani,");
+                    experiencePart = experiencePart.concat("senior-level,");
                     break;
                 case "Management":
-                    experiencePart = experiencePart.concat("executive-10-ani,");
+                    experiencePart = experiencePart.concat("executive-level,");
                     break;
             }
         }

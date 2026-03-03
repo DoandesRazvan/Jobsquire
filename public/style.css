@@ -47,44 +47,68 @@ button {
     }
 }
 
-.content {
-    display: flex;
+#content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* grid-template-rows: calc(1fr - 40px); */
+    grid-gap: 0 15px;
     justify-content: center;
-    align-items: center;
-    flex-direction: column;
+    align-content: center;
+    height: 100vh;
     width: 100vw;
-    min-height: 100vh;
-    height: auto;
-    background: #11151c;
+    background: 
+          radial-gradient(ellipse 70% 55% at 50% 50%, rgba(255, 107, 61, 0.10), transparent 50%),
+          radial-gradient(ellipse 160% 130% at 10% 10%, rgba(255, 42, 42, 0.12), transparent 60%),
+          radial-gradient(ellipse 160% 130% at 90% 90%, rgba(143, 74, 52, 0.18), transparent 65%),
+          radial-gradient(ellipse 110% 50% at 80% 30%, rgba(255, 122, 0, 0.08), transparent 40%),
+         #000;
     color: #f8f9fa;
+    padding: 0 20px;
+}
 
-    #logo {
-        width: 340px;
-    }
+#main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    grid-column: 1;
+    height: auto;
+    padding: 20px 0;
+}
+
+#logo {
+    width: 340px;
 }
 
 #info {
     display: flex;
     flex-direction: column;
-    width: 740px;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 0;
     
     h1 {
         font-family: "Manrope", sans-serif;
         font-weight: 500;
         font-size: 20px;
         margin-bottom: 0;
+        background: #1C120B;
+        color: #FFB347;
+        text-shadow: 2px 2px 20px #A8743A;
+        width: fit-content;
+        padding: 5px 15px;
+        border-radius: 5px;
     }
     
     h2 {
         font-family: "Inter", sans-serif;
         font-weight: 400;
         font-size: 15px;
-        max-width: 740px;
     }
 }
 
 #main-ctas {
     display: flex;
+    align-self: flex-end;
     
     .cta {
         height: 40px;
@@ -158,13 +182,14 @@ button {
     flex-direction: column;
     align-items: flex-start;
     padding: 15px;
-    width: 740px;
+    width: 100%;
     min-height: 340px;
     margin-top: 10px;
     /* animation: show 3s ease; */
 }
 
 #jobs-search {
+    grid-column: 1;
     display: flex;
     background: #2F160D;
     color: #FF6A3D;
@@ -476,15 +501,18 @@ button {
 #scraper-content {
     display: flex;
     flex-direction: column;
+    grid-column: 2;
+    height: 100vh;
+    padding: 20px 0;
 
     #ai-prompts {
-        width: 740px;
+        width: 100%;
         display: none;
         flex-wrap: wrap;
         justify-content: space-between;
 
         button {
-            width: 360px;
+            width: 50%;
             height: 30px;
             font-size: 12px;
             font-family: "Inter", sans-serif;
@@ -523,22 +551,39 @@ button {
 
     #jobs-found {
         display: none;
-        grid-template-columns: 338px 338px;
-        gap: 40px 40px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px 20px;
         justify-items: center;
-        padding: 10px;
         border: solid 2px rgba(255, 90, 46, 0.5);
         border-radius: 5px;
-        overflow: hidden;
+        overflow: auto;
+        padding: 5px;
         /* background: rgba(255, 46, 136, 0.05); */
         /* background: rgba(255, 90, 46, 0.05); */
+
+        &::-webkit-scrollbar {
+            width: 7px;
+        }
+        
+        &::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: #9a1f45;
+            border-radius: 20px;
+        }
+
+        &::-webkit-scrollbar-thumb:hover {
+            background: #b33a3a;
+        }
 
         .job {
             position: relative;
             z-index: 0;
             display: flex;
             flex-wrap: wrap;
-            width: 338px;
+            width: 100%;
             height: auto;
             min-height: 100px;
             font-family: "Manrope", sans-serif;
@@ -546,7 +591,7 @@ button {
             border-radius: 5px;
             cursor: pointer;
             transition: all 0.3s ease-in-out;
-            background: linear-gradient(((at calc(var--mouse--x) * 100%) deg,rgba(154, 31, 69, 1) 0%, rgba(179, 58, 58, 1) 50%, rgba(199, 90, 26, 1) 100%));
+            overflow: hidden;
 
             &::before {
                 content: "";

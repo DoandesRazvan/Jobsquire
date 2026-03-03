@@ -10,6 +10,7 @@ const roleFilterButton = document.getElementById("filter-role");
 const wfhremoteFilterButton = document.getElementById("filter-wfhremote");
 const resetButton = document.getElementById("reset-button");
 const wfoFilterButton = document.getElementById("filter-wfo");
+const aiFilters = document.querySelectorAll('.ai-filters');
 let jobList = [];
 
 // function that animates job card backgrounds based on the user's cursor location
@@ -84,6 +85,10 @@ roleFilterButton.addEventListener("click", async () => {
     if (data.text == "No jobs matching the criteria found") {
         aiComms.textContent = data.text;
         jobsFoundDiv.innerHTML = "";
+        jobsFoundDiv.style.display = "none";
+        aiFilters.forEach((filter) => {
+            filter.setAttribute("disabled", true);
+        });
     } else {
         jobsFoundDiv.innerHTML = data.text;// replacing the jobs-found div content with the filtered results from AI, which it already parsed as the HTML following the same format
         aiComms.textContent = jobsFoundDiv.childElementCount + " jobs matching the criteria found";
@@ -116,6 +121,8 @@ wfhremoteFilterButton.addEventListener("click", async () => {
     if (data.text == "No jobs matching the criteria found") {
         aiComms.textContent = data.text;
         jobsFoundDiv.innerHTML = "";
+        jobsFoundDiv.style.display = "none";
+        aiFilters.setAttribute("disabled", true);
     } else {
         jobsFoundDiv.innerHTML = data.text;// replacing the jobs-found div content with the filtered results from AI, which it already parsed as the HTML following the same format
 
@@ -149,6 +156,10 @@ wfoFilterButton.addEventListener("click", async () => {
     if (data.text == "No jobs matching the criteria found") {
         aiComms.textContent = data.text;
         jobsFoundDiv.innerHTML = "";
+        jobsFoundDiv.style.display = "none";
+        aiFilters.forEach((filter) => {
+            filter.setAttribute("disabled", true);
+        });
     } else {
         jobsFoundDiv.innerHTML = data.text;// replacing the jobs-found div content with the filtered results from AI, which it already parsed as the HTML following the same format
 
@@ -181,6 +192,10 @@ resetButton.addEventListener("click", () => {
 
     changeResultsStyle("reset");
 
+    jobsFoundDiv.style.display = "grid";
+    aiFilters.forEach((filter) => {
+            filter.removeAttribute("disabled");
+    });
     resetButton.style.display = "none";
     aiComms.textContent = "Initial job search results regenerated";
 });
@@ -223,7 +238,6 @@ searchJobsButton.addEventListener("click", async () => {
         
         // let backgroundStyle = "linear-gradient(at calc(var--mouse--x) * 100)deg,rgba(154, 31, 69, 1) 0%, rgba(179, 58, 58, 1) 50%, rgba(199, 90, 26, 1) 100%)";
 
-
         let jobDiv = document.createElement("div");
         jobDiv.classList.add("job");
 
@@ -239,8 +253,6 @@ searchJobsButton.addEventListener("click", async () => {
         jobsFoundDiv.appendChild(jobDiv);
     }); 
 
-    jobsFoundDiv.style.display = "grid";
-
     scraperComms.textContent = "Search complete";
     aiComms.textContent = jobResults.length + " jobs found using selected criteria"
 
@@ -248,29 +260,30 @@ searchJobsButton.addEventListener("click", async () => {
     if (jobResults.length > 0) {
         document.getElementById("download-button").style.display = "initial";
         document.getElementById("ai-prompts").style.display = "flex";
+        jobsFoundDiv.style.display = "grid";
     }
 })
 
-// trigger job search field UI
-searchJobsFieldTrigger.addEventListener("click", () => {
-    const paramElement = document.getElementById("jobs-search");
+// // trigger job search field UI
+// searchJobsFieldTrigger.addEventListener("click", () => {
+//     const paramElement = document.getElementById("jobs-search");
 
-    paramElement.classList.toggle("show");
+//     paramElement.classList.toggle("show");
 
-    if (paramElement.classList.contains("show")) {
-        for (let child of paramElement.children) {
-            child.style = "opacity: 1";
-            searchJobsFieldTrigger.style.textShadow = "1px 1px 15px #FF004D";
-            searchJobsFieldTrigger.style.fontSize = "14px";
-        }
-    } else {
-        for (let child of paramElement.children) {
-            child.style = "opacity: 0";
-            searchJobsFieldTrigger.style.textShadow = "1px 1px 15px #B14A2E";
-            searchJobsFieldTrigger.style.fontSize = "13px";
-        }
-    }
-});
+//     if (paramElement.classList.contains("show")) {
+//         for (let child of paramElement.children) {
+//             child.style = "opacity: 1";
+//             searchJobsFieldTrigger.style.textShadow = "1px 1px 15px #FF004D";
+//             searchJobsFieldTrigger.style.fontSize = "14px";
+//         }
+//     } else {
+//         for (let child of paramElement.children) {
+//             child.style = "opacity: 0";
+//             searchJobsFieldTrigger.style.textShadow = "1px 1px 15px #B14A2E";
+//             searchJobsFieldTrigger.style.fontSize = "13px";
+//         }
+//     }
+// });
 
 // add event listeners to each company logo
 companies.forEach(company => {

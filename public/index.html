@@ -13,100 +13,76 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
   </head>
-
   <body>
-    <div class="content">
-      <!-- <img src="./icons/logo.svg" alt="Jobsquire logo" id="logo"> -->
-      <div id="info">
-        <h1>&#x1f590; Welcome to Jobsquire, your trusty helper in the job market search.</h1>
-        <h2>&#x1F916; Jobsquire is an application that uses web scrapers to simultaneously search through Romania's main job-searching websites, with an integrated AI model for filtering results.
-          <br>
-          <br>
-        </h2>
-      </div>
+    <div id="content">
+      <div id="main-content">
+        <img src="./icons/logo.svg" alt="Jobsquire logo" id="logo">
 
-      <div id="main-ctas">
-        <button id="search-jobs-btn" class="cta">Search for jobs</button>
-        <button id="market-overview-btn" class="cta">Job Market Overview</button>
-        <button id="market-news-btn" class="cta">Job Market News</button>
-        <button id="assistance-btn" class="cta">Job Search Help</button>
-      </div>
-
-      <div id="jobs-search" class="content-box">
-        <label for="role">Role:</label>
-        <input type="text" id="role" placeholder="e.g Web Developer, Accountant...">
-        <label for="location">Location:</label>
-        <input type="text" id="location" placeholder="e.g Europe, Romania, Bucharest...">
-        <div id="experience-radiobtns">
-          <label>Level of experience:</label>
-          <input type="checkbox" id="internship" value="Internship">
-          <label for="internship">Internship</label>
-          <input type="checkbox" id="entry-level" value="Entry">
-          <label for="entry-level">Entry Level</label>
-          <input type="checkbox" id="medium-level" value="Medium">
-          <label for="medium-level">Medium Level</label>
-          <input type="checkbox" id="senior-level" value="Senior">
-          <label for="senior-level">Senior</label>
-          <input type="checkbox" id="management" value="Management">
-          <label for="management">Management</label>
+        <div id="info">
+          <h1>Welcome to Jobsquire, your trusty helper in the job market search.</h1>
+          <h2>Jobsquire is an application that uses web scrapers to simultaneously search through Romania's main job-searching websites, with an integrated AI model for filtering results.
+          </h2>
         </div>
-        <div id="job-sites">
-          <p>Select websites: </p>
-          <div id="companies">
-            <span id="ejobs" class="company-logo"></span>
-            <span class="company-name">eJobs</span>
-            <span id="bestjobs" class="company-logo"></span>
-            <span class="company-name">Bestjobs</span>
-            <span id="hipo" class="company-logo"></span>
-            <span class="company-name">Hipo</span>
-            <span id="undelucram" class="company-logo"></span>
-            <span class="company-name">UndeLucram</span>
-            <span id="jooble" class="company-logo"></span>
-            <span class="company-name">Jooble</span>
+
+        <div id="jobs-search" class="content-box">
+          <label for="role">Role:</label>
+          <input type="text" id="role" placeholder="e.g Web Developer, Accountant...">
+          <label for="location">Location:</label>
+          <input type="text" id="location" placeholder="e.g Europe, Romania, Bucharest...">
+          <div id="experience-radiobtns">
+            <label>Level of experience:</label>
+            <input type="checkbox" id="internship" value="Internship">
+            <label for="internship">Internship</label>
+            <input type="checkbox" id="entry-level" value="Entry">
+            <label for="entry-level">Entry Level</label>
+            <input type="checkbox" id="medium-level" value="Medium">
+            <label for="medium-level">Medium Level</label>
+            <input type="checkbox" id="senior-level" value="Senior">
+            <label for="senior-level">Senior</label>
+            <input type="checkbox" id="management" value="Management">
+            <label for="management">Management</label>
+          </div>
+          <div id="job-sites">
+            <p>Select websites: </p>
+            <div id="companies">
+              <span id="ejobs" class="company-logo"></span>
+              <span class="company-name">eJobs</span>
+              <span id="bestjobs" class="company-logo"></span>
+              <span class="company-name">Bestjobs</span>
+              <span id="hipo" class="company-logo"></span>
+              <span class="company-name">Hipo</span>
+              <span id="undelucram" class="company-logo"></span>
+              <span class="company-name">UndeLucram</span>
+              <span id="jooble" class="company-logo"></span>
+              <span class="company-name">Jooble</span>
+            </div>
+          </div>
+          <button id="search-btn">Search</button>
+          <div id="results">
+            <p id="scraper-comms"></p>
+            <a id="download-button" href="./jobs.json" download="generatedjobs">Download Results</a>
           </div>
         </div>
-        <button id="search-btn">Search</button>
-        <div id="results">
-          <p id="scraper-comms"></p>
-          <a id="download-button" href="./jobs.json" download="generatedjobs">Download Results</a>
-        </div>
+
+        <!-- <div id="main-ctas">
+          <button id="search-jobs-btn" class="cta">Search for jobs</button>
+          <button id="market-overview-btn" class="cta">Job Market Overview</button>
+          <button id="market-news-btn" class="cta">Job Market News</button>
+          <button id="assistance-btn" class="cta">Job Search Help</button>
+        </div> -->
       </div>
-
-      <!-- <div id="jobs-overview" class="content-box">
-        
-      </div>
-
-      <div id="jobs-news" class="content-box">
-        
-      </div>
-
-      <div id="jobs-help" class="content-box">
-        
-      </div> -->
-
-      <!-- <div id="scraper-content">
-        <div id="ai-prompts">
-          <button id="filter-role" class="ai-filters">Filter: include only your desired role</button>
-          <button id="filter-wfhremote" class="ai-filters">Filter: include only WFH/Remote positions</button>
-          <button id="filter-wfo" class="ai-filters">Filter: include only WFO positions</button>
-          <button id="reset-button">&#8634; Reset to initial results</button>
-          <p id="ai-comms"></p>
-        </div>
-        <div id="jobs-found">
-      </div> -->
-
+      
       <div id="scraper-content">
         <div id="ai-prompts">
           <button id="filter-role" class="ai-filters">Filter: include only your desired role</button>
           <button id="filter-wfhremote" class="ai-filters">Filter: include only WFH/Remote positions</button>
           <button id="filter-wfo" class="ai-filters">Filter: include only WFO positions</button>
           <button id="reset-button">↺ Reset to initial results</button>
-          <p id="ai-comms">4 jobs found using selected criteria</p>
+          <p id="ai-comms">49 jobs found using selected criteria</p>
         </div>
-        <div id="jobs-found">
-
-        </div>
-      </div>  
+        <div id="jobs-found"></div>
+      </div>      
+    </div>  
 
     <script src="script.js"></script>
   </body>
