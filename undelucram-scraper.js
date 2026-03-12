@@ -1,7 +1,7 @@
 import puppeteer from "puppeteer";
 
 const undelucramScraper = async (role, locations, experience) => {
-    const browser = await puppeteer.launch({headless: false});
+    const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
     let jobsList = [];

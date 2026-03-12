@@ -8,8 +8,6 @@
     <link rel="icon" type="image/x-icon" href="./icons/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
   </head>
@@ -20,8 +18,31 @@
 
         <div id="info">
           <h1>Welcome to Jobsquire, your trusty helper in the job market search.</h1>
-          <h2>Jobsquire is an application that uses web scrapers to simultaneously search through Romania's main job-searching websites, with an integrated AI model for filtering results.
-          </h2>
+          
+
+          <p id="info-btn">What is Jobsquire? How does it work?<span>&#x23F7</span></p>
+
+          <div id="info-content-wrapper">
+            <div id="info-content">
+              <p>
+                <span>Have you ever searched for a role you wanted and got job postings that had no relevance to the role you searched for? Jobsquire is here to fix that issue.</span>
+                <br>
+                <br>
+                <span>This app works by having a search field where you can input your desired search parameters and select from five of the most popular job-searching websites in Romania, enabling you to search for your desired role on multiple sites at once, improving speed.</span>
+                <br>
+                <br>
+                <span>The results will be served up on this same page and you will then be able to interact with each one as well as filter the results based on specific criteria (If the results are relevant to the role you're looking for or by WFO/WFH/Remote positions). You can also download the results locally in case you don't want to use the Jobsquire filters.</span>
+                <br>
+                <br>
+                <span>We all know that looking for a job is already a huge stressor, so this app was made to help you save some energy and time during a stressful period.</span>
+                <br>
+                <br>
+                <span><strong>*Technical info:</strong> Jobsquire uses web scrapers to search for job postings and uses an integrated Gemini 3 Flash AI model to filter the job results.
+                <br> 
+                AI might make mistakes so if after filtering the results you feel like a mistake was made, you can restore the initial results and download the results file and do your own filtering, and you'll also have access to the search link for every result in case you want to do your own manual search.</span>
+              </p>
+            </div>
+          </div>
         </div>
 
         <div id="jobs-search" class="content-box">
@@ -72,16 +93,78 @@
         </div> -->
       </div>
       
-      <div id="scraper-content">
+      <!-- <div id="scraper-content">
         <div id="ai-prompts">
           <button id="filter-role" class="ai-filters">Filter: include only your desired role</button>
           <button id="filter-wfhremote" class="ai-filters">Filter: include only WFH/Remote positions</button>
           <button id="filter-wfo" class="ai-filters">Filter: include only WFO positions</button>
-          <button id="reset-button">↺ Reset to initial results</button>
+          <button class="reset-button">↺ Reset to initial results</button>
           <p id="ai-comms">49 jobs found using selected criteria</p>
         </div>
         <div id="jobs-found"></div>
-      </div>      
+      </div> -->
+      <div id="scraper-content">
+        <div id="ai-prompts" style="display: flex;">
+          <button id="filter-role" class="ai-filters">Filter: include only your desired role</button>
+          <button id="filter-wfhremote" class="ai-filters">Filter: include only WFH/Remote positions</button>
+          <button id="filter-wfo" class="ai-filters">Filter: include only WFO positions</button>
+          <button class="reset-button">↺ Reset to initial results</button>
+          <p id="ai-comms">26 jobs found using selected criteria</p>
+        </div>
+        <div id="jobs-found" style="background-color: rgba(255, 106, 61, 0.05); border-color: rgba(255, 106, 61, 0.5); display: grid;"><div class="job" style="background: linear-gradient(-40deg, rgb(154, 31, 69) 0%, rgb(179, 58, 58) 50%, rgb(199, 90, 26) 100%);"><a target="_blank&quot;" href="https://www.ejobs.ro/user/locuri-de-munca/junior-developer-academia-de-software/1941276">Junior Developer Academia de Software</a>
+        <span>From: </span>
+        <a target="_blank" href="https://www.ejobs.ro/locuri-de-munca/bucuresti/no-experience,entry-level/web-developer">eJobs</a></div><div class="job" style="background: linear-gradient(77deg, rgb(154, 31, 69) 0%, rgb(179, 58, 58) 50%, rgb(199, 90, 26) 100%);"><a target="_blank&quot;" href="https://www.ejobs.ro/user/locuri-de-munca/internship-angular-developer/1940990">Internship Angular Developer</a>
+        <span>From: </span>
+        <a target="_blank" href="https://www.ejobs.ro/locuri-de-munca/bucuresti/no-experience,entry-level/web-developer">eJobs</a></div><div class="job" style="background: linear-gradient(-68deg, rgb(154, 31, 69) 0%, rgb(179, 58, 58) 50%, rgb(199, 90, 26) 100%);"><a target="_blank&quot;" href="https://www.ejobs.ro/user/locuri-de-munca/internship-java-developer/1940988">Internship Java Developer</a>
+        <span>From: </span>
+        <a target="_blank" href="https://www.ejobs.ro/locuri-de-munca/bucuresti/no-experience,entry-level/web-developer">eJobs</a></div><div class="job" style="background: linear-gradient(-88deg, rgb(154, 31, 69) 0%, rgb(179, 58, 58) 50%, rgb(199, 90, 26) 100%);"><a target="_blank&quot;" href="https://www.ejobs.ro/user/locuri-de-munca/specialist-grafica/1942907">Specialist Grafica</a>
+        <span>From: </span>
+        <a target="_blank" href="https://www.ejobs.ro/locuri-de-munca/bucuresti/no-experience,entry-level/web-developer">eJobs</a></div><div class="job" style="background: linear-gradient(84deg, rgb(154, 31, 69) 0%, rgb(179, 58, 58) 50%, rgb(199, 90, 26) 100%);"><a target="_blank&quot;" href="https://www.ejobs.ro/user/locuri-de-munca/business-developer-bucuresti-luni/1939932">Business Developer - Bucuresti (6 Luni)</a>
+        <span>From: </span>
+        <a target="_blank" href="https://www.ejobs.ro/locuri-de-munca/bucuresti/no-experience,entry-level/web-developer">eJobs</a></div><div class="job" style="background: linear-gradient(-81deg, rgb(154, 31, 69) 0%, rgb(179, 58, 58) 50%, rgb(199, 90, 26) 100%);"><a target="_blank&quot;" href="https://www.ejobs.ro/user/locuri-de-munca/vanzator-penny-voluntari/1936990">Vanzator - PENNY Voluntari</a>
+        <span>From: </span>
+        <a target="_blank" href="https://www.ejobs.ro/locuri-de-munca/bucuresti/no-experience,entry-level/web-developer">eJobs</a></div><div class="job" style="background: linear-gradient(-80deg, rgb(154, 31, 69) 0%, rgb(179, 58, 58) 50%, rgb(199, 90, 26) 100%);"><a target="_blank&quot;" href="https://www.ejobs.ro/user/locuri-de-munca/vanzator-penny-bucuresti-sector-fizicienilor/1941300">Vanzator - PENNY Bucuresti (Sector 3 - Fizicienilor)</a>
+        <span>From: </span>
+        <a target="_blank" href="https://www.ejobs.ro/locuri-de-munca/bucuresti/no-experience,entry-level/web-developer">eJobs</a></div><div class="job" style="background: linear-gradient(-47deg, rgb(154, 31, 69) 0%, rgb(179, 58, 58) 50%, rgb(199, 90, 26) 100%);"><a target="_blank&quot;" href="https://www.ejobs.ro/user/locuri-de-munca/vanzator-penny-bucuresti-sector-basarabia/1941303">Vanzator - PENNY Bucuresti (Sector 2 - Basarabia)</a>
+        <span>From: </span>
+        <a target="_blank" href="https://www.ejobs.ro/locuri-de-munca/bucuresti/no-experience,entry-level/web-developer">eJobs</a></div><div class="job" style="background: linear-gradient(-35deg, rgb(154, 31, 69) 0%, rgb(179, 58, 58) 50%, rgb(199, 90, 26) 100%);"><a target="_blank&quot;" href="https://www.ejobs.ro/user/locuri-de-munca/vanzator-penny-bucuresti-sector-rebreanu/1942069">Vanzator - PENNY Bucuresti (Sector 3 - Rebreanu)</a>
+        <span>From: </span>
+        <a target="_blank" href="https://www.ejobs.ro/locuri-de-munca/bucuresti/no-experience,entry-level/web-developer">eJobs</a></div><div class="job" style="background: linear-gradient(28deg, rgb(154, 31, 69) 0%, rgb(179, 58, 58) 50%, rgb(199, 90, 26) 100%);"><a target="_blank&quot;" href="https://www.ejobs.ro/user/locuri-de-munca/asistent-clienti-in-limba-italiana/1938136">ASISTENT CLIENTI IN LIMBA ITALIANA</a>
+        <span>From: </span>
+        <a target="_blank" href="https://www.ejobs.ro/locuri-de-munca/bucuresti/no-experience,entry-level/web-developer">eJobs</a></div><div class="job" style="background: linear-gradient(2deg, rgb(154, 31, 69) 0%, rgb(179, 58, 58) 50%, rgb(199, 90, 26) 100%);"><a target="_blank&quot;" href="https://www.ejobs.ro/user/locuri-de-munca/vanzator-penny-bucuresti-sector-fundeni-morarilor/1941311">Vanzator - PENNY Bucuresti (Sector 2 - Fundeni Morarilor)</a>
+        <span>From: </span>
+        <a target="_blank" href="https://www.ejobs.ro/locuri-de-munca/bucuresti/no-experience,entry-level/web-developer">eJobs</a></div><div class="job" style="background: linear-gradient(-25deg, rgb(154, 31, 69) 0%, rgb(179, 58, 58) 50%, rgb(199, 90, 26) 100%);"><a target="_blank&quot;" href="https://www.ejobs.ro/user/locuri-de-munca/vanzator-penny-pantelimon-ilfov/1941307">Vanzator - PENNY Pantelimon (Ilfov)</a>
+        <span>From: </span>
+        <a target="_blank" href="https://www.ejobs.ro/locuri-de-munca/bucuresti/no-experience,entry-level/web-developer">eJobs</a></div><div class="job" style="background: linear-gradient(-7deg, rgb(154, 31, 69) 0%, rgb(179, 58, 58) 50%, rgb(199, 90, 26) 100%);"><a target="_blank&quot;" href="https://www.ejobs.ro/user/locuri-de-munca/vanzator-penny-bucuresti-sector-gherase/1942073">Vanzator - PENNY Bucuresti (Sector 2 - Gherase)</a>
+        <span>From: </span>
+        <a target="_blank" href="https://www.ejobs.ro/locuri-de-munca/bucuresti/no-experience,entry-level/web-developer">eJobs</a></div><div class="job" style="background: linear-gradient(-51deg, rgb(154, 31, 69) 0%, rgb(179, 58, 58) 50%, rgb(199, 90, 26) 100%);"><a target="_blank&quot;" href="https://www.ejobs.ro/user/locuri-de-munca/vanzator-penny-bucuresti-sector-baba-novac/1942067">Vanzator - PENNY Bucuresti (Sector 3 - Baba Novac)</a>
+        <span>From: </span>
+        <a target="_blank" href="https://www.ejobs.ro/locuri-de-munca/bucuresti/no-experience,entry-level/web-developer">eJobs</a></div><div class="job" style="background: linear-gradient(20deg, rgb(154, 31, 69) 0%, rgb(179, 58, 58) 50%, rgb(199, 90, 26) 100%);"><a target="_blank&quot;" href="https://www.ejobs.ro/user/locuri-de-munca/programator-entry-level-php-laravel-vue-js/1940627">Programator Entry Level PHP – Laravel &amp; Vue.js</a>
+        <span>From: </span>
+        <a target="_blank" href="https://www.ejobs.ro/locuri-de-munca/bucuresti/no-experience,entry-level/web-developer">eJobs</a></div><div class="job" style="background: linear-gradient(57deg, rgb(154, 31, 69) 0%, rgb(179, 58, 58) 50%, rgb(199, 90, 26) 100%);"><a target="_blank&quot;" href="https://www.ejobs.ro/user/locuri-de-munca/operator-receptie-proaspete-depozit-stefanestii-de-jos/1940997">Operator receptie proaspete (Depozit Stefanestii de jos)</a>
+        <span>From: </span>
+        <a target="_blank" href="https://www.ejobs.ro/locuri-de-munca/bucuresti/no-experience,entry-level/web-developer">eJobs</a></div><div class="job" style="background: linear-gradient(58deg, rgb(154, 31, 69) 0%, rgb(179, 58, 58) 50%, rgb(199, 90, 26) 100%);"><a target="_blank&quot;" href="https://www.ejobs.ro/user/locuri-de-munca/e-commerce-assistant/1939754">E-commerce Assistant</a>
+        <span>From: </span>
+        <a target="_blank" href="https://www.ejobs.ro/locuri-de-munca/bucuresti/no-experience,entry-level/web-developer">eJobs</a></div><div class="job" style="background: linear-gradient(-58deg, rgb(154, 31, 69) 0%, rgb(179, 58, 58) 50%, rgb(199, 90, 26) 100%);"><a target="_blank&quot;" href="https://www.ejobs.ro/user/locuri-de-munca/vanzator-penny-bucuresti-sector-pallady/1936988">Vanzator - PENNY Bucuresti (Sector 3 - Pallady)</a>
+        <span>From: </span>
+        <a target="_blank" href="https://www.ejobs.ro/locuri-de-munca/bucuresti/no-experience,entry-level/web-developer">eJobs</a></div><div class="job" style="background: linear-gradient(15deg, rgb(154, 31, 69) 0%, rgb(179, 58, 58) 50%, rgb(199, 90, 26) 100%);"><a target="_blank&quot;" href="https://www.ejobs.ro/user/locuri-de-munca/vanzator-penny-bucuresti-sector-decembrie/1936989">Vanzator - PENNY Bucuresti (Sector 3 - 1 Decembrie)</a>
+        <span>From: </span>
+        <a target="_blank" href="https://www.ejobs.ro/locuri-de-munca/bucuresti/no-experience,entry-level/web-developer">eJobs</a></div><div class="job" style="background: linear-gradient(28deg, rgb(154, 31, 69) 0%, rgb(179, 58, 58) 50%, rgb(199, 90, 26) 100%);"><a target="_blank&quot;" href="https://www.ejobs.ro/user/locuri-de-munca/level-customer-support-agent/1939234">Level 2 Customer Support Agent</a>
+        <span>From: </span>
+        <a target="_blank" href="https://www.ejobs.ro/locuri-de-munca/bucuresti/no-experience,entry-level/web-developer">eJobs</a></div><div class="job" style="background: linear-gradient(27deg, rgb(154, 31, 69) 0%, rgb(179, 58, 58) 50%, rgb(199, 90, 26) 100%);"><a target="_blank&quot;" href="https://www.ejobs.ro/user/locuri-de-munca/ofiter-sisteme-informatice-si-de-comunicatii/1942691">Ofițer sisteme informatice și de comunicații</a>
+        <span>From: </span>
+        <a target="_blank" href="https://www.ejobs.ro/locuri-de-munca/bucuresti/no-experience,entry-level/web-developer">eJobs</a></div><div class="job" style="background: linear-gradient(-33deg, rgb(154, 31, 69) 0%, rgb(179, 58, 58) 50%, rgb(199, 90, 26) 100%);"><a target="_blank&quot;" href="https://www.ejobs.ro/user/locuri-de-munca/operator-magazin-online-e-commerce/1939831">Operator Magazin Online / E-Commerce</a>
+        <span>From: </span>
+        <a target="_blank" href="https://www.ejobs.ro/locuri-de-munca/bucuresti/no-experience,entry-level/web-developer">eJobs</a></div><div class="job" style="background: linear-gradient(-45deg, rgb(154, 31, 69) 0%, rgb(179, 58, 58) 50%, rgb(199, 90, 26) 100%);"><a target="_blank&quot;" href="https://www.ejobs.ro/user/locuri-de-munca/consultant-turism-baneasa/1942156">Consultant Turism - Baneasa</a>
+        <span>From: </span>
+        <a target="_blank" href="https://www.ejobs.ro/locuri-de-munca/bucuresti/no-experience,entry-level/web-developer">eJobs</a></div><div class="job" style="background: linear-gradient(-72deg, rgb(154, 31, 69) 0%, rgb(179, 58, 58) 50%, rgb(199, 90, 26) 100%);"><a target="_blank&quot;" href="https://www.bestjobs.eu/loc-de-munca/programator-delphi-mid-level-2">Programator Delphi Mid-Level</a>
+        <span>From: </span>
+        <a target="_blank" href="https://www.bestjobs.eu/locuri-de-munca-in-bucuresti/no-experience,entry-level/web-developer">Bestjobs</a></div><div class="job" style="background: linear-gradient(39deg, rgb(154, 31, 69) 0%, rgb(179, 58, 58) 50%, rgb(199, 90, 26) 100%);"><a target="_blank&quot;" href="https://www.bestjobs.eu/loc-de-munca/full-stack-ai-engineer-automation-systems">Full-Stack AI Engineer (Automation &amp; Systems)</a>
+        <span>From: </span>
+        <a target="_blank" href="https://www.bestjobs.eu/locuri-de-munca-in-bucuresti/no-experience,entry-level/web-developer">Bestjobs</a></div><div class="job" style="background: linear-gradient(-26deg, rgb(154, 31, 69) 0%, rgb(179, 58, 58) 50%, rgb(199, 90, 26) 100%);"><a target="_blank&quot;" href="https://www.bestjobs.eu/loc-de-munca/full-stack-java-developer-with-french">Full stack Java developer with French</a>
+        <span>From: </span>
+        <a target="_blank" href="https://www.bestjobs.eu/locuri-de-munca-in-bucuresti/no-experience,entry-level/web-developer">Bestjobs</a></div></div>
+      </div>
     </div>  
 
     <script src="script.js"></script>

@@ -1,6 +1,8 @@
+// getting DOM elements
+const content = document.getElementById("content");
 const askButton = document.getElementById("ask-btn");
-const searchJobsFieldTrigger = document.getElementById("search-jobs-btn");
-const test = document.getElementById("assistance-btn");
+const infoBtn = document.getElementById("info-btn");
+const infoContentWrapper = document.getElementById("info-content-wrapper");
 const searchJobsButton = document.getElementById("search-btn");
 const scraperComms = document.getElementById("scraper-comms");
 const aiComms = document.getElementById("ai-comms");
@@ -8,26 +10,54 @@ const jobsFoundDiv = document.getElementById("jobs-found");
 const companies = document.querySelectorAll(".company-logo");
 const roleFilterButton = document.getElementById("filter-role");
 const wfhremoteFilterButton = document.getElementById("filter-wfhremote");
-const resetButton = document.getElementById("reset-button");
+const resetButton = document.querySelector(".reset-button");
 const wfoFilterButton = document.getElementById("filter-wfo");
 const aiFilters = document.querySelectorAll('.ai-filters');
+
+// initializing job variables
 let jobList = [];
+let filteredJobs = [];
 
-// function that animates job card backgrounds based on the user's cursor location
-// function cursorBackgroundAnimator() {
-//     let jobCards = document.querySelectorAll(".job");
+// object that holds the style values used to change some scraper content divs' appearance
+let styleColors = {commsBackgroundColor: "", commsBorderColor: "", commsTextColor: "", resultsBackgroundColor: "",resultsBorderColor: ""};
 
-//     jobCards.forEach((card) => {
-//         card.addEventListener('mousemove', (e) => {
-//             card.style.backgroundPositionX = -e.offsetX + "px";
-//             card.style.backgroundPositionY = -e.offsetY + "px";
-//         })
-//     })
-// }
+// add event listeners to each company logo
+companies.forEach(company => {
+    company.addEventListener("click", () => {
+        company.classList.toggle("selected");
+    });
+});
 
+// enable or disable ai prompts buttons function
+function aiBtnsControl(value, updateResetButton) {
+    if (value == "disable") {
+        [...aiFilters].forEach((filter) => {
+            filter.setAttribute("disabled", true);
+        });
+
+        if (updateResetButton == "yes") {resetButton.setAttribute("disabled", true)};
+    } else if (value == "enable") {
+        [...aiFilters].forEach((filter) => {
+            filter.removeAttribute("disabled");
+        });
+
+        if (updateResetButton == "yes") {resetButton.removeAttribute("disabled")};
+    }
+}
+
+// function that collects the job sites selected by the user
+function selectedCompanies() {
+    let list = [];
+
+    companies.forEach(company => {
+        if (company.classList.contains("selected")) {list.push(company.getAttribute("id"))};
+    });
+
+    return list;
+}
+
+// function that changes appearance of jobs found div and ai comms based on what button was pressed
 function changeResultsStyle(buttonPressed) {
-    let styleColors = {commsBackgroundColor: "", commsBorderColor: "", commsTextColor: "", resultsBackgroundColor: "",resultsBorderColor: ""};
-
     switch (buttonPressed) { // can change the comms colors to hex values to keep the original format
         case "ai-filter":
             styleColors.commsBackgroundColor = "rgba(27, 30, 35, 1)";
@@ -60,116 +90,109 @@ function changeResultsStyle(buttonPressed) {
     jobsFoundDiv.style.borderColor = styleColors.resultsBorderColor;
 };
 
-// prompt gemini to filter jobs found by desired role when pressing the button
-roleFilterButton.addEventListener("click", async () => {
-    const desiredRole = document.getElementById("role").value; // getting the job role the user searched for
+async function runAiFilter(filterName) {
     const jobsFoundHTML = document.getElementById("jobs-found").innerHTML;
+    let prompt = "";
+
+    // updating UI after a filter starts running
+    aiBtnsControl("disable");
+    resetButton.setAttribute("disabled", true);
 
     changeResultsStyle("ai-filter");
+    jobsFoundDiv.classList.toggle("filters-running");
 
-    aiComms.textContent = "Filtering results to only include " + desiredRole + " roles...";
+    // updating ai comms and prompt based on button pressed
+    switch(filterName) {
+        case "role":
+            let desiredRole = document.getElementById("role").value;
+            
+            aiComms.textContent = "Filtering results to only include " + desiredRole + " roles...";
 
-    // can improve this prompt so it filters results more accurately
-    const prompt = "You have the following HTML code consisting of divs with the class of 'job', each having a job title (a tag's text value) and link (a tag's href property): " + jobsFoundHTML + " . Please look through each of these jobs and return only the jobs that are relevant to the " + desiredRole + " position and exclude the ones that don't fit the criteria. Once you did that, please only give a response with the results you filtered formatted as HTML code following the format of the code I sent you. If there are no results that meet the criteria, please respond with only the text 'No jobs matching the criteria found'" ;
+            prompt = "You have the following HTML code consisting of divs with the class of 'job', each having a job title (a tag's text value) and link (a tag's href property): " + jobsFoundHTML + " . Please look through each of these jobs and return only the jobs that are relevant to the " + desiredRole + " position and exclude the ones that don't fit the criteria. Once you did that, please only give a response with the results you filtered formatted as HTML code following the format of the code I sent you. If there are no results that meet the criteria, please respond with only the text 'No jobs matching the criteria found'";
+            
+            break;
 
-    console.log(prompt);
+        case "wfhremote":
+            aiComms.textContent = "Filtering results to only include WFH/Remote positions...";
 
+            prompt = "You have the following HTML code consisting of divs with the class of 'job', each having a job title (a tag's text value) and link (a tag's href property): " + jobsFoundHTML + " . Please look through each of these jobs and return only the jobs that are WFH/Remote positions and exclude the ones that don't fit the criteria. Once you did that, please only give a response with the results you filtered formatted as HTML code following the format of the code I sent you. If there are no results that meet the criteria, please respond with only the text 'No jobs matching the criteria found'";
+            
+            break;
+
+        case "wfo":
+            aiComms.textContent = "Filtering results to only include WFO positions...";
+
+            prompt = "You have the following HTML code consisting of divs with the class of 'job', each having a job title (a tag's text value) and link (a tag's href property): " + jobsFoundHTML + " . Please look through each of these jobs and return only the jobs that are WFO positions and exclude the ones that don't fit the criteria. Once you did that, please only give a response with the results you filtered formatted as HTML code following the format of the code I sent you.If there are no results that meet the criteria, please respond with only the text 'No jobs matching the criteria found'";
+
+            break;
+    }
+
+    // fetching Gemini API and passing it the prompt
     const res = await fetch("/api/generate", {
-       method: "POST",
-       headers: { "Content-Type": "application/json" },
-       body: JSON.stringify({prompt})
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({prompt})
     });
 
+    // if AI model fails to respond, reset the UI so the user can try filtering again and pass the error message
+    if (res.error) {
+        aiComms.textContent = res.text;
+
+        aiBtnsControl("enable");
+        resetButton.removeAttribute("disabled", true);
+        jobsFoundDiv.classList.toggle("filters-running");
+
+        return;
+    }
+
     const data = await res.json();
-    
+
+    // updating app based on Gemini result
     if (data.text == "No jobs matching the criteria found") {
         aiComms.textContent = data.text;
         jobsFoundDiv.innerHTML = "";
         jobsFoundDiv.style.display = "none";
-        aiFilters.forEach((filter) => {
-            filter.setAttribute("disabled", true);
-        });
+        filteredJobs = [];
     } else {
         jobsFoundDiv.innerHTML = data.text;// replacing the jobs-found div content with the filtered results from AI, which it already parsed as the HTML following the same format
+
+        filteredJobs = Array.from(jobsFoundDiv.querySelectorAll(".job")).map(element => {
+            return {
+                title: element.querySelector("a:first-child").innerText,
+                link: element.querySelector("a:first-child").href,
+                currentUrl: element.querySelector("a:last-of-type").href,
+                company: element.querySelector("a:last-of-type").innerText
+            }
+        });
+
         aiComms.textContent = jobsFoundDiv.childElementCount + " jobs matching the criteria found";
+
+        aiBtnsControl("enable");
     }
 
+    // updating jobs.json file with the filtered results
+    await fetch("/aifilters", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(filteredJobs)
+    });
+
+    // making the reset button visible and functional and removing overlay from jobs-found div
     resetButton.style.display = "initial";
-});
+    resetButton.removeAttribute("disabled");
+    jobsFoundDiv.classList.toggle("filters-running");
+}
+
+// prompt gemini to filter jobs found by desired role when pressing the button
+roleFilterButton.addEventListener("click", () => {runAiFilter("role")});
 
 // prompt gemini to filter jobs found to only include wfh/remote positions when pressing the button
-wfhremoteFilterButton.addEventListener("click", async () => {
-    const jobsFoundHTML = document.getElementById("jobs-found").innerHTML;
-
-    changeResultsStyle("ai-filter");
-
-    aiComms.textContent = "Filtering results to only include WFH/Remote positions...";
-
-    // can improve this prompt so it filters results more accurately
-    const prompt = "You have the following HTML code consisting of divs with the class of 'job', each having a job title (a tag's text value) and link (a tag's href property): " + jobsFoundHTML + " . Please look through each of these jobs and return only the jobs that are WFH/Remote positions and exclude the ones that don't fit the criteria. Once you did that, please only give a response with the results you filtered formatted as HTML code following the format of the code I sent you. If there are no results that meet the criteria, please respond with only the text 'No jobs matching the criteria found'";
-
-    console.log(prompt);
-
-    const res = await fetch("/api/generate", {
-       method: "POST",
-       headers: { "Content-Type": "application/json" },
-       body: JSON.stringify({prompt})
-    });
-
-    const data = await res.json();
-    
-    if (data.text == "No jobs matching the criteria found") {
-        aiComms.textContent = data.text;
-        jobsFoundDiv.innerHTML = "";
-        jobsFoundDiv.style.display = "none";
-        aiFilters.setAttribute("disabled", true);
-    } else {
-        jobsFoundDiv.innerHTML = data.text;// replacing the jobs-found div content with the filtered results from AI, which it already parsed as the HTML following the same format
-
-        aiComms.textContent = jobsFoundDiv.childElementCount + " jobs matching the criteria found";
-    }
-
-    resetButton.style.display = "initial";
-});
+wfhremoteFilterButton.addEventListener("click", () => {runAiFilter("wfhremote")});
 
 // prompt gemini to filter jobs found to only include wfo positions when pressing the button
-wfoFilterButton.addEventListener("click", async () => {
-    const jobsFoundHTML = document.getElementById("jobs-found").innerHTML;
+wfoFilterButton.addEventListener("click", () => {runAiFilter("wfo")});
 
-    changeResultsStyle("ai-filter");
-
-    aiComms.textContent = "Filtering results to only include WFO positions...";
-
-    // can improve this prompt so it filters results more accurately
-    const prompt = "You have the following HTML code consisting of divs with the class of 'job', each having a job title (a tag's text value) and link (a tag's href property): " + jobsFoundHTML + " . Please look through each of these jobs and return only the jobs that are WFO positions and exclude the ones that don't fit the criteria. Once you did that, please only give a response with the results you filtered formatted as HTML code following the format of the code I sent you.If there are no results that meet the criteria, please respond with only the text 'No jobs matching the criteria found'" ;
-
-    console.log(prompt);
-
-    const res = await fetch("/api/generate", {
-       method: "POST",
-       headers: { "Content-Type": "application/json" },
-       body: JSON.stringify({prompt})
-    });
-
-    const data = await res.json();
-    
-    if (data.text == "No jobs matching the criteria found") {
-        aiComms.textContent = data.text;
-        jobsFoundDiv.innerHTML = "";
-        jobsFoundDiv.style.display = "none";
-        aiFilters.forEach((filter) => {
-            filter.setAttribute("disabled", true);
-        });
-    } else {
-        jobsFoundDiv.innerHTML = data.text;// replacing the jobs-found div content with the filtered results from AI, which it already parsed as the HTML following the same format
-
-        aiComms.textContent = jobsFoundDiv.childElementCount + " jobs matching the criteria found";
-    }
-
-    resetButton.style.display = "initial";
-});
-
-resetButton.addEventListener("click", () => {
+resetButton.addEventListener("click", async () => {
     jobsFoundDiv.innerHTML = "";
 
     // kinda duplicate loop of the scraper one, see if it can be turned into a function that can be recycled
@@ -192,12 +215,17 @@ resetButton.addEventListener("click", () => {
 
     changeResultsStyle("reset");
 
-    jobsFoundDiv.style.display = "grid";
-    aiFilters.forEach((filter) => {
-            filter.removeAttribute("disabled");
+    await fetch("/aifilters", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({jobs: jobsFoundDiv.innerHTML})
     });
+
+    jobsFoundDiv.style.display = "grid";
     resetButton.style.display = "none";
-    aiComms.textContent = "Initial job search results regenerated";
+    aiComms.textContent = "Initial job search results restored(" + jobList.length + ")";
+    
+    if(jobList.length > 1) {aiBtnsControl("enable");} // only enable the filter buttons if there are any results to filter
 });
 
 // activate scraper and fetch jobs
@@ -205,6 +233,13 @@ searchJobsButton.addEventListener("click", async () => {
     document.getElementById("results").style.display = "flex";
     scraperComms.textContent = "Fetching jobs..."; // updating DOM informing the user that the script is running
 
+    // resetting stored job results every time a new search is issued
+    jobList = [];
+    filteredJobs = [];
+
+    changeResultsStyle("search");
+
+    // getting user's search parameters
     const selectedCompaniesList = selectedCompanies();
     const role = document.getElementById("role").value;
     const locations = document.getElementById("location").value;
@@ -212,6 +247,8 @@ searchJobsButton.addEventListener("click", async () => {
                                  .map((element) => {if (element.checked) {return element.value}})
                                  .filter((arrValue) => arrValue != undefined);
 
+    
+    // fetching backend to run the scraper functions                             
     const res = await fetch("/jobs", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -223,20 +260,19 @@ searchJobsButton.addEventListener("click", async () => {
         })
     });
 
+    // adding scraper results to a variable for parsing
     const jobData = await res.json();
     const jobResults = Array.from(jobData.jobs);
 
-    // resetting stored job results every time a new search is issued
-    jobList = [];
+    // just before the results are added to the DOM, split the grid into two even columns
+    content.style.gridTemplateColumns = "1fr 1fr";
+    content.style.gap = "0 15px";
 
-    changeResultsStyle("search");
-
+    // going through each job result and adding it to the DOM as well as storing it in a variable on this file
     jobResults.forEach((job) => {
         let plusOrMinus = Math.random() < 0.5 ? -1 : 1;
         let randomNum = plusOrMinus * Math.floor(Math.random() * 91);
         let backgroundStyle = "linear-gradient(" + randomNum + "deg,rgba(154, 31, 69, 1) 0%, rgba(179, 58, 58, 1) 50%, rgba(199, 90, 26, 1) 100%)"; // change this to have 3 randomnums for all variables
-        
-        // let backgroundStyle = "linear-gradient(at calc(var--mouse--x) * 100)deg,rgba(154, 31, 69, 1) 0%, rgba(179, 58, 58, 1) 50%, rgba(199, 90, 26, 1) 100%)";
 
         let jobDiv = document.createElement("div");
         jobDiv.classList.add("job");
@@ -253,6 +289,7 @@ searchJobsButton.addEventListener("click", async () => {
         jobsFoundDiv.appendChild(jobDiv);
     }); 
 
+    // updating DOM that search is complete
     scraperComms.textContent = "Search complete";
     aiComms.textContent = jobResults.length + " jobs found using selected criteria"
 
@@ -264,75 +301,7 @@ searchJobsButton.addEventListener("click", async () => {
     }
 })
 
-// // trigger job search field UI
-// searchJobsFieldTrigger.addEventListener("click", () => {
-//     const paramElement = document.getElementById("jobs-search");
-
-//     paramElement.classList.toggle("show");
-
-//     if (paramElement.classList.contains("show")) {
-//         for (let child of paramElement.children) {
-//             child.style = "opacity: 1";
-//             searchJobsFieldTrigger.style.textShadow = "1px 1px 15px #FF004D";
-//             searchJobsFieldTrigger.style.fontSize = "14px";
-//         }
-//     } else {
-//         for (let child of paramElement.children) {
-//             child.style = "opacity: 0";
-//             searchJobsFieldTrigger.style.textShadow = "1px 1px 15px #B14A2E";
-//             searchJobsFieldTrigger.style.fontSize = "13px";
-//         }
-//     }
-// });
-
-// add event listeners to each company logo
-companies.forEach(company => {
-    company.addEventListener("click", () => {
-        company.classList.toggle(".selected")
-    });
-})
-
-// function that collects the job sites selected by the user
-function selectedCompanies() {
-    let list = [];
-
-    companies.forEach(company => {
-        if (company.classList.contains(".selected")) {list.push(company.getAttribute("id"))};
-    });
-
-    return list;
-}
-
-
-// searchJobsFieldTrigger.addEventListener("click", () => {
-//     const paramElement = document.getElementById("jobs-search");
-
-//     paramElement.classList.toggle("show");
-
-//     if (paramElement.classList.contains("show")) {
-//         for (let child of paramElement.children) {
-//             child.style = "opacity: 1";
-//         }
-//     } else {
-//         for (let child of paramElement.children) {
-//             child.style = "opacity: 0";
-//         }
-//     }
-// })
-
-
-// searchJobsFieldTrigger.addEventListener("click", () => {
-//     const paramElement = document.getElementById("jobs-news");
-
-//     paramElement.classList.toggle("show");
-
-//     if (paramElement.classList.contains("show")) {
-//         for (let child of paramElement.children) {
-//             child.style = "opacity: 1";
-//         }
-//     } else {
-//         for (let child of paramElement.children) {
-//             child.style = "opacity: 0";
-//         }
-//     }
-// })
+// toggle animation on click for info-btn 
+infoBtn.addEventListener("click", () => {
+    infoContentWrapper.classList.toggle("info-content-show");
+});

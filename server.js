@@ -12,17 +12,49 @@ const app = express();
 app.use(express.json({limit: "10mb"}));
 app.use(express.static("public"));
 
-const ai = new GoogleGenAI({apiKey: process.env.GEMINI_API_KEY,});
+const ai = new GoogleGenAI({apiKey: process.env.GEMINI_API_KEY});
+
+function updateJobsDoc(results) {
+  fs.writeFile(
+    "./public/jobs.json",
+    results,
+    err => {
+        if (err) throw err;
+
+        console.log("Successfully updated the jobs document");
+    }
+  )
+}
+
+app.post("/aifilters", async (req, res) => {
+  let newJobs = JSON.stringify(req.body);
+
+  console.log(newJobs);
+
+  updateJobsDoc(newJobs);
+
+  res.json({
+    response: "Function ran successfully"
+  });
+});
 
 app.post("/api/generate", async (req, res) => {
   const { prompt } = req.body;
+  let response;
 
-  const response = await ai.models.generateContent({
-    model: "gemini-3-flash-preview",
-    contents: prompt,
-  });
+  try {
+    response = await ai.models.generateContent({
+      model: "gemini-3-flash-preview", // might need to change ai model due to rate limits (gemma 3 27b is dumb, just tried it)
+      contents: prompt,
+    });
+  } catch(err) {
+    res.json({
+      text: err,
+      error: true
+    });
 
-  console.log(response.text);
+    return;
+  }
 
   res.json({
     text: response.text
@@ -43,23 +75,48 @@ app.post("/jobs", async (req, res) => {
 
       switch (company) {
         case "ejobs":
-          results = await ejobsScraper(wantedRole, wantedLocations, wantedExperience);
+          try {
+            results = await ejobsScraper(wantedRole, wantedLocations, wantedExperience);
+          } catch (error) {
+            console.log(error);
+            results = [];
+          }
           console.log(results);
           break;
         case "bestjobs":
-          results = await bestjobsScraper(wantedRole, wantedLocations, wantedExperience);
+          try {
+            results = await bestjobsScraper(wantedRole, wantedLocations, wantedExperience);
+          } catch (error) {
+            console.log(error);
+            results = [];
+          }
           console.log(results);
           break;
         case "hipo":
-          results = await hipoScraper(wantedRole, wantedLocations, wantedExperience);
+          try {
+            results = await hipoScraper(wantedRole, wantedLocations, wantedExperience);
+          } catch (error) {
+            console.log(error);
+            results = [];
+          }
           console.log(results);
           break;
         case "undelucram":
-          results = await undelucramScraper(wantedRole, wantedLocations, wantedExperience);
+          try {
+            results = await undelucramScraper(wantedRole, wantedLocations, wantedExperience);
+          } catch (error) {
+            console.log(error);
+            results = [];
+          }
           console.log(results);
           break;
         case "jooble":
-          results = await joobleScraper(wantedRole, wantedLocations, wantedExperience);
+          try {
+            results = await joobleScraper(wantedRole, wantedLocations, wantedExperience);
+          } catch (error) {
+            console.log(error);
+            results = [];
+          }
           console.log(results);
           break;
         default: "No company selected"; // default might need to be removed
@@ -73,23 +130,25 @@ app.post("/jobs", async (req, res) => {
 
   let parsedResults = JSON.stringify(allJobResults);
 
-  fs.writeFile(
-    "./public/jobs.json",
-    parsedResults,
-    err => {
-        if (err) throw err;
+  updateJobsDoc(parsedResults);
 
-        console.log("Successfully found and added " + allJobResults.length + " new jobs to the document");
-    }
-  )
+  // fs.writeFile(
+  //   "./public/jobs.json",
+  //   parsedResults,
+  //   err => {
+  //       if (err) throw err;
+
+  //       console.log("Successfully found and added " + allJobResults.length + " new jobs to the document");
+  //   }
+  // )
 
   res.json({
       jobs: allJobResults
   });
 });
 
-app.listen(3001, () => {
-  console.log("Server running on http://localhost:3001");
+app.listen(3000, () => {
+  console.log("Server running on http://localhost:3000");
 });
 
 // scraper();

@@ -5,74 +5,48 @@
 }
 
 :root {
-    --text-anim-color: white;
+    interpolate-size: allow-keywords;
 }
 
 body {
     margin: 0;
+    padding: 0;
 }
 
 button {
     cursor: pointer;
 }
 
-@keyframes show {
-    0% {height: 0}
-    100% {height: 340px}
-}
-
-@keyframes textShadowRotate {
-    16.66% {
-        text-shadow: 1px 1px 15px #FF2A2A;
-    }
-
-    33.32% {
-        text-shadow: -15px 1px 15px #FF2A2A;
-    }
-
-    49.98% {
-        text-shadow: 3px -15px 15px #FF2A2A;
-    }
-
-    66.64% {
-        text-shadow: -15px 3px 15px #FF2A2A;
-    }
-
-    83.33% {
-        text-shadow: -15px -3px 15px #FF2A2A;
-    }
-
-    100% {
-        text-shadow: 1px -3px 15px #FF2A2A;
-    }
-}
-
 #content {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    /* grid-template-rows: calc(1fr - 40px); */
-    grid-gap: 0 15px;
+    /* grid-template-columns: 50vw 0; */
+    grid-template-columns: 1fr 1fr;
+    gap: 0 15px;
     justify-content: center;
-    align-content: center;
-    height: 100vh;
-    width: 100vw;
+    min-height: 100vh;
+    width: 100%;
     background: 
           radial-gradient(ellipse 70% 55% at 50% 50%, rgba(255, 107, 61, 0.10), transparent 50%),
-          radial-gradient(ellipse 160% 130% at 10% 10%, rgba(255, 42, 42, 0.12), transparent 60%),
-          radial-gradient(ellipse 160% 130% at 90% 90%, rgba(143, 74, 52, 0.18), transparent 65%),
-          radial-gradient(ellipse 110% 50% at 80% 30%, rgba(255, 122, 0, 0.08), transparent 40%),
+          radial-gradient(ellipse 160% 130% at 10% 10%, rgba(58, 159, 107, 0.08), transparent 60%),
+          radial-gradient(ellipse 160% 130% at 90% 90%, rgba(179, 58, 58, 0.20), transparent 65%),
+          radial-gradient(ellipse 110% 50% at 80% 30%, rgba(255, 122, 0, 0.14), transparent 40%),
          #000;
     color: #f8f9fa;
+    transition: grid-template-columns 0.3s ease;
     padding: 0 20px;
+    place-items: center;
+
 }
 
 #main-content {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     grid-column: 1;
     height: auto;
     padding: 20px 0;
+    width: 100%;
 }
 
 #logo {
@@ -91,7 +65,7 @@ button {
         font-weight: 500;
         font-size: 20px;
         margin-bottom: 0;
-        background: #1C120B;
+        /* background: #1C120B; */
         color: #FFB347;
         text-shadow: 2px 2px 20px #A8743A;
         width: fit-content;
@@ -99,14 +73,87 @@ button {
         border-radius: 5px;
     }
     
-    h2 {
+    #info-btn {
+        position: relative;
         font-family: "Inter", sans-serif;
         font-weight: 400;
         font-size: 15px;
+        padding: 10px 15px;
+        width: 100%;
+        transition: all 0.3s ease;
+        color: #14FF8A;
+        border: solid 1px #3A9F6B;
+        margin-bottom: 0;
+        border-radius: 5px;
+        background: rgba(7, 26, 16, 0.42);
+        backdrop-filter: blur(22px) saturate(182%);
+        -webkit-backdrop-filter: blur(22px) saturate(182%);
+
+        span {
+            position: absolute;
+            right: 10px;
+            transition: all 0.5s ease;
+        }
+
+        &:hover {
+            cursor: pointer;
+            background: rgba(7, 26, 16, 0.80);
+        }
+
+        &:has(+ #info-content-wrapper.info-content-show) {
+            span {
+                transform: rotate(-180deg) translateY(-3px);
+                transform-origin: center center;
+            }
+        }
+    }
+
+    #info-content-wrapper {
+        overflow: hidden;
+        height: 0;
+        transition: height 0.5s ease-in-out;
+
+        &.info-content-show {
+            height: max-content;
+        }
+    }
+
+    
+
+    #info-content {
+        height: max-content;
+        margin-top: 0;
+        background: rgba(13, 43, 30, 0.3);
+        backdrop-filter: blur(30px) saturate(140%);
+        -webkit-backdrop-filter: blur(30px) saturate(140%);
+        font-family: "Inter", sans-serif;
+        color: #94d2bd;
+        padding: 10px;
+        border: solid 1px #2FA36B;
+        border-radius: 5px;
+        margin-top: 5px;
+
+        span {
+            font-weight: 400;
+            font-size: 14px;
+        }
+
+        span:first-of-type {
+            font-weight: 600;
+            font-size: 18px;
+            color: #80ed99;
+            font-family: "Manrope", sans-serif;
+        }
+
+        span:last-of-type {
+            font-style: italic;
+            font-size: 12px;
+            color: #2FA88A;
+        }
     }
 }
 
-#main-ctas {
+/* #main-ctas {
     display: flex;
     align-self: flex-end;
     
@@ -127,7 +174,6 @@ button {
 
         &:hover {
             font-size: 15px;
-            /* animation: textShadowRotate 5s alternate infinite; */
         }
     }
 
@@ -175,7 +221,7 @@ button {
             text-shadow: 1px 1px 15px #FFB347;
         }
     }
-}
+} */
 
 .content-box {
     /* display: none; */
@@ -191,9 +237,12 @@ button {
 #jobs-search {
     grid-column: 1;
     display: flex;
-    background: #2F160D;
+    background: rgba(47, 22, 13, 0.32);
+    backdrop-filter: blur(22px) saturate(182%);
+    -webkit-backdrop-filter: blur(22px) saturate(182%);
     color: #FF6A3D;
     border: solid 1px #9A3F28;
+    border-radius: 5px;
     font-family: "Manrope", sans-serif;
     font-weight: bold;
     min-height: 0;
@@ -510,24 +559,42 @@ button {
         display: none;
         flex-wrap: wrap;
         justify-content: space-between;
+        gap: 10px;
 
         button {
-            width: 50%;
+            width: calc(50% - 5px);
             height: 30px;
             font-size: 12px;
             font-family: "Inter", sans-serif;
             font-weight: 500;
             border-radius: 15px;
-            margin-top: 15px;
+            transition: all 0.3s ease;
+
+            &:disabled, &:disabled:hover {
+                background: #333;
+                color: gray;
+                border-color: gray;
+            }
+
+            &:disabled:hover {
+                text-shadow: none;
+                cursor: not-allowed;
+            }
         }
 
-        .ai-filters {
-            background: #1B1E23;
+        .ai-filters { 
+            background-color: rgba(27, 30, 35, 1);
             color: #FF2E88;
             border: solid 2px #A1446F;
+
+            &:hover {
+                background-color: rgba(27, 30, 35, 1);
+                color: #ff167b;
+                text-shadow: 0px 0px 20px rgba(255, 22, 123, 0.74);
+            }
         }
 
-        #reset-button {
+        .reset-button {
             display: none;
             background: #0D2B1E;
             color: #00FF7F;
@@ -538,10 +605,11 @@ button {
             flex-basis: 100%;
             font-family: "Inter", sans-serif;
             font-size: 16px;
-            color: #fffafa;
             text-align: center;
-            margin-top: 30px;
-            background: #2F160D;
+            margin-top: 20px;
+            background: rgba(47, 22, 13, 0.2);
+            backdrop-filter: blur(17px) saturate(182%);
+            -webkit-backdrop-filter: blur(17px) saturate(182%);
             padding: 10px;
             border-radius: 5px;
             border: dotted 2px #9A3F28;
@@ -550,6 +618,7 @@ button {
     } 
 
     #jobs-found {
+        position: relative;
         display: none;
         grid-template-columns: repeat(2, 1fr);
         gap: 40px 20px;
@@ -558,6 +627,9 @@ button {
         border-radius: 5px;
         overflow: auto;
         padding: 5px;
+        z-index: 0;
+        backdrop-filter: blur(40px);
+        -webkit-backdrop-filter: blur(40px);
         /* background: rgba(255, 46, 136, 0.05); */
         /* background: rgba(255, 90, 46, 0.05); */
 
@@ -576,6 +648,23 @@ button {
 
         &::-webkit-scrollbar-thumb:hover {
             background: #b33a3a;
+        }
+
+        &.filters-running {
+            overflow: hidden;
+
+            &::after {
+                position: absolute;
+                content: '';
+                display: block;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: #000;
+                opacity: 0.5;
+                z-index: 1;
+            }
         }
 
         .job {
@@ -623,7 +712,7 @@ button {
             }
     
             a {
-                background: linear-gradient(90deg, rgba(240,248,255,1) 0%, rgba(160,196,255,1) 50%, rgba(70,130,255,1) 100%);
+                background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(245,235,220,1) 50%, rgba(220,200,170,1) 100%);
                 color: transparent;
                 background-clip: text;
                 text-decoration: none;
@@ -662,6 +751,21 @@ button {
                 padding-right: 1px;
                 z-index: 2;
             }
+        }
+    }
+}
+
+@media only screen and (max-width: 1350px) {
+    #content {
+        grid-template-columns: 1fr 0;
+        grid-template-rows: 1fr 1fr;
+        gap: 0;
+        /* padding: 20px 40px; */
+        padding: 0;
+
+        #scraper-content {
+            grid-row-start: 2;
+            grid-column-start: 1;
         }
     }
 }
