@@ -223,7 +223,7 @@ resetButton.addEventListener("click", async () => {
 
     jobsFoundDiv.style.display = "grid";
     resetButton.style.display = "none";
-    aiComms.textContent = "Initial job search results restored(" + jobList.length + ")";
+    aiComms.textContent = "Initial job search results restored (" + jobList.length + ")";
     
     if(jobList.length > 1) {aiBtnsControl("enable");} // only enable the filter buttons if there are any results to filter
 });
@@ -264,9 +264,12 @@ searchJobsButton.addEventListener("click", async () => {
     const jobData = await res.json();
     const jobResults = Array.from(jobData.jobs);
 
-    // just before the results are added to the DOM, split the grid into two even columns
-    content.style.gridTemplateColumns = "1fr 1fr";
-    content.style.gap = "0 15px";
+    // just before the results are added to the DOM, split the grid into two even columns (and check how to split it based on window width)
+    if (window.innerWidth > 1350) {
+        content.style.gridTemplateColumns = "1fr 1fr";
+        content.style.gap = "0 15px";
+        content.style.placeItems = "start";
+    }
 
     // going through each job result and adding it to the DOM as well as storing it in a variable on this file
     jobResults.forEach((job) => {
