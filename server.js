@@ -10,7 +10,7 @@ import fs from "fs";
 const app = express();
 
 app.use(express.json({limit: "10mb"}));
-app.use(express.static("public"));
+app.use("/", express.static("public"));
 
 const ai = new GoogleGenAI({apiKey: process.env.GEMINI_API_KEY});
 
