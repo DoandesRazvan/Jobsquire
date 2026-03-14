@@ -249,7 +249,7 @@ searchJobsButton.addEventListener("click", async () => {
 
     
     // fetching backend to run the scraper functions                             
-    const res = await fetch("/jobs", {
+    const res = await fetch("/.netlify/functions/server/jobs", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

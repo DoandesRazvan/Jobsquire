@@ -4,13 +4,16 @@ import {bestjobsScraper} from "./bestjobs-scraper.js";
 import {undelucramScraper} from "./undelucram-scraper.js";
 import {joobleScraper} from "./jooble-scraper.js";
 import express from "express";
+import serverless from "serverless-http";
 import {GoogleGenAI} from "@google/genai";
 import fs from "fs";
 
 const app = express();
+const router = express.Router();
 
 app.use(express.json({limit: "10mb"}));
 app.use("/", express.static("public"));
+app.use('.netlify/functions/server', router);
 
 const ai = new GoogleGenAI({apiKey: process.env.GEMINI_API_KEY});
 
@@ -26,7 +29,7 @@ function updateJobsDoc(results) {
   )
 }
 
-app.post("/aifilters", async (req, res) => {
+router.post("/aifilters", async (req, res) => {
   let newJobs = JSON.stringify(req.body);
 
   console.log(newJobs);
@@ -38,7 +41,7 @@ app.post("/aifilters", async (req, res) => {
   });
 });
 
-app.post("/api/generate", async (req, res) => {
+router.post("/api/generate", async (req, res) => {
   const { prompt } = req.body;
   let response;
 
@@ -61,7 +64,7 @@ app.post("/api/generate", async (req, res) => {
   });
 });
 
-app.post("/jobs", async (req, res) => {
+router.post("/jobs", async (req, res) => {
   let companyList = req.body.companies;
   let wantedRole = req.body.role;
   let wantedLocations = req.body.locations;
