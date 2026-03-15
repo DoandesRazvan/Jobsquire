@@ -145,4 +145,4 @@ app.listen(3000, () => {
 
 
 app.use('.netlify/functions/api', router);
-module.exports.handler = serverless(app);
+export const handler = serverless(app);
