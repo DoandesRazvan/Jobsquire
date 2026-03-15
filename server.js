@@ -13,7 +13,6 @@ const router = express.Router();
 
 app.use(express.json({limit: "10mb"}));
 app.use("/", express.static("public"));
-app.use('.netlify/functions/server', router);
 
 const ai = new GoogleGenAI({apiKey: process.env.GEMINI_API_KEY});
 
@@ -135,16 +134,6 @@ router.post("/jobs", async (req, res) => {
 
   updateJobsDoc(parsedResults);
 
-  // fs.writeFile(
-  //   "./public/jobs.json",
-  //   parsedResults,
-  //   err => {
-  //       if (err) throw err;
-
-  //       console.log("Successfully found and added " + allJobResults.length + " new jobs to the document");
-  //   }
-  // )
-
   res.json({
       jobs: allJobResults
   });
@@ -154,4 +143,6 @@ app.listen(3000, () => {
   console.log("Server running on http://localhost:3000");
 });
 
-// scraper();
+
+app.use('.netlify/functions/api', router);
+module.exports.handler = serverless(app);
