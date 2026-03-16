@@ -1,5 +1,3 @@
-[build]
-  functions = "functions"
 [functions]
   external_node_modules = ["express"]
   node_bundler = "esbuild"
@@ -7,4 +5,4 @@
   force = true
   from = "/*"
   status = 200
-  to = "/functions/server.js/:splat"
+  to = "/server/:splat"
