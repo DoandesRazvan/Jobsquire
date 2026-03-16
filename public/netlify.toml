@@ -1,3 +1,8 @@
 [functions]
   external_node_modules = ["express"]
   node_bundler = "esbuild"
+[redirects]
+  from = "/*"
+  to = "./server/:splat"
+  status = 200
+  force = true
