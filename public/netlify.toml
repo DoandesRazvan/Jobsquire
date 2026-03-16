@@ -7,4 +7,4 @@
   force = true
   from = "/*"
   status = 200
-  to = "/functions/server/:splat"
+  to = "/functions/server.js/:splat"
