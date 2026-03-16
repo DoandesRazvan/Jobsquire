@@ -1,8 +1,8 @@
-import {ejobsScraper} from "./ejobs-scraper.js";
-import {hipoScraper} from "./hipo-scraper.js";
-import {bestjobsScraper} from "./bestjobs-scraper.js";
-import {undelucramScraper} from "./undelucram-scraper.js";
-import {joobleScraper} from "./jooble-scraper.js";
+import {ejobsScraper} from "../ejobs-scraper.js";
+import {hipoScraper} from "../hipo-scraper.js";
+import {bestjobsScraper} from "../bestjobs-scraper.js";
+import {undelucramScraper} from "../undelucram-scraper.js";
+import {joobleScraper} from "../jooble-scraper.js";
 import express, {Router} from "express";
 import serverless from "serverless-http";
 import {GoogleGenAI} from "@google/genai";
