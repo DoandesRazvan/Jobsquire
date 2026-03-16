@@ -14,7 +14,7 @@ const router = express.Router();
 app.use(express.json({limit: "10mb"}));
 app.use("/", express.static("public"));
 
-const ai = new GoogleGenAI({apiKey: process.env.GEMINI_API_KEY});
+const ai = new GoogleGenAI({apiKey: env.GEMINI_API_KEY || process.env.GEMINI_API_KEY});
 
 function updateJobsDoc(results) {
   fs.writeFile(
@@ -139,7 +139,7 @@ router.post("/jobs", async (req, res) => {
   });
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log("Server running on http://localhost:3000");
