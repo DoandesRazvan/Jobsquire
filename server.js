@@ -7,6 +7,7 @@ import express from "express";
 import serverless from "serverless-http";
 import {GoogleGenAI} from "@google/genai";
 import fs from "fs";
+import { env } from "cloudflare:workers";
 
 const app = express();
 const router = express.Router();
