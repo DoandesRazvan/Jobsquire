@@ -7,7 +7,6 @@ import express from "express";
 import serverless from "serverless-http";
 import {GoogleGenAI} from "@google/genai";
 import fs from "fs";
-import { env } from "cloudflare:workers";
 
 const app = express();
 const router = express.Router();
@@ -15,7 +14,7 @@ const router = express.Router();
 app.use(express.json({limit: "10mb"}));
 app.use("/", express.static("public"));
 
-const ai = new GoogleGenAI({apiKey: env.GEMINI_API_KEY || process.env.GEMINI_API_KEY});
+const ai = new GoogleGenAI({apiKey: process.env.GEMINI_API_KEY});
 
 function updateJobsDoc(results) {
   fs.writeFile(
