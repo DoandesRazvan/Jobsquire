@@ -27,6 +27,10 @@ function updateJobsDoc(results) {
   )
 }
 
+app.get("/", (req, res) => {
+  res.sendFile("../public/index.html");
+})
+
 app.post("/aifilters", async (req, res) => {
   let newJobs = JSON.stringify(req.body);
 
