@@ -8,7 +8,7 @@
   "main": "script.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js",
+    "dev": "nodemon ./functions/server.js",
     "build": "node ./functions/server.js"
   },
   "dependencies": {
