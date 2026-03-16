@@ -12,6 +12,7 @@ const app = express();
 const router = Router();
 
 app.use(express.json({limit: "10mb"}));
+app.use("/", express.static("public"));
 app.use("/", router);
 
 const ai = new GoogleGenAI({apiKey: process.env.GEMINI_API_KEY});
