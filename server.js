@@ -4,7 +4,6 @@ import {bestjobsScraper} from "./bestjobs-scraper.js";
 import {undelucramScraper} from "./undelucram-scraper.js";
 import {joobleScraper} from "./jooble-scraper.js";
 import express from "express";
-import serverless from "serverless-http";
 import {GoogleGenAI} from "@google/genai";
 import fs from "fs";
 
@@ -28,7 +27,7 @@ function updateJobsDoc(results) {
   )
 }
 
-router.post("/aifilters", async (req, res) => {
+app.post("/aifilters", async (req, res) => {
   let newJobs = JSON.stringify(req.body);
 
   console.log(newJobs);
@@ -40,7 +39,7 @@ router.post("/aifilters", async (req, res) => {
   });
 });
 
-router.post("/api/generate", async (req, res) => {
+app.post("/api/generate", async (req, res) => {
   const { prompt } = req.body;
   let response;
 
@@ -63,7 +62,7 @@ router.post("/api/generate", async (req, res) => {
   });
 });
 
-router.post("/jobs", async (req, res) => {
+app.post("/jobs", async (req, res) => {
   let companyList = req.body.companies;
   let wantedRole = req.body.role;
   let wantedLocations = req.body.locations;
@@ -142,8 +141,7 @@ router.post("/jobs", async (req, res) => {
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log("Server running on http://localhost:3000");
+  console.log(`Server running on ${PORT}`);
 });
 
-app.use('.netlify/functions/api', router);
-export const handler = serverless(app);
+export const server = app;
