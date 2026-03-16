@@ -128,7 +128,7 @@ async function runAiFilter(filterName) {
     }
 
     // fetching Gemini API and passing it the prompt
-    const res = await fetch("/api/generate", {
+    const res = await fetch("/run/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({prompt})
@@ -171,7 +171,7 @@ async function runAiFilter(filterName) {
     }
 
     // updating jobs.json file with the filtered results
-    await fetch("/aifilters", {
+    await fetch("/run/aifilters", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(filteredJobs)
@@ -215,7 +215,7 @@ resetButton.addEventListener("click", async () => {
 
     changeResultsStyle("reset");
 
-    await fetch("/aifilters", {
+    await fetch("/run/aifilters", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({jobs: jobsFoundDiv.innerHTML})
@@ -249,7 +249,7 @@ searchJobsButton.addEventListener("click", async () => {
 
     
     // fetching backend to run the scraper functions                             
-    const res = await fetch("/jobs", {
+    const res = await fetch("/run/jobs", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
