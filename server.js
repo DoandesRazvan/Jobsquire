@@ -3,15 +3,16 @@ import {hipoScraper} from "./hipo-scraper.js";
 import {bestjobsScraper} from "./bestjobs-scraper.js";
 import {undelucramScraper} from "./undelucram-scraper.js";
 import {joobleScraper} from "./jooble-scraper.js";
-import express from "express";
+import express, {Router} from "express";
+import serverless from "serverless-http";
 import {GoogleGenAI} from "@google/genai";
 import fs from "fs";
 
 const app = express();
-const router = express.Router();
+const router = Router();
 
 app.use(express.json({limit: "10mb"}));
-app.use("/", express.static("public"));
+app.use("/", router);
 
 const ai = new GoogleGenAI({apiKey: process.env.GEMINI_API_KEY});
 
@@ -27,7 +28,7 @@ function updateJobsDoc(results) {
   )
 }
 
-app.post("/aifilters", async (req, res) => {
+router.post("/aifilters", async (req, res) => {
   let newJobs = JSON.stringify(req.body);
 
   console.log(newJobs);
@@ -39,7 +40,7 @@ app.post("/aifilters", async (req, res) => {
   });
 });
 
-app.post("/api/generate", async (req, res) => {
+router.post("/api/generate", async (req, res) => {
   const { prompt } = req.body;
   let response;
 
@@ -62,7 +63,7 @@ app.post("/api/generate", async (req, res) => {
   });
 });
 
-app.post("/jobs", async (req, res) => {
+router.post("/jobs", async (req, res) => {
   let companyList = req.body.companies;
   let wantedRole = req.body.role;
   let wantedLocations = req.body.locations;
@@ -144,4 +145,4 @@ const PORT = process.env.PORT || 3000;
 //   console.log(`Server running on ${PORT}`);
 // });
 
-export const server = app;
+export const handler = serverless(app);
