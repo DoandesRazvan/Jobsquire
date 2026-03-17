@@ -5,13 +5,19 @@ import {undelucramScraper} from "./undelucram-scraper.js";
 import {joobleScraper} from "./jooble-scraper.js";
 import express from "express";
 import serverless from "serverless-http";
+import path from "path";
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 import {GoogleGenAI} from "@google/genai";
 import fs from "fs";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express();
 
 app.use(express.json({limit: "10mb"}));
-app.use("/", express.static("public"));
+app.use(express.static(path.join(__dirname, "/public")));
 
 const ai = new GoogleGenAI({apiKey: process.env.GEMINI_API_KEY});
 
