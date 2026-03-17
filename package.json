@@ -8,8 +8,8 @@
   "main": "script.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon ./functions/server.js",
-    "build": "node ./functions/server.js"
+    "dev": "nodemon ./functions/server.mjs",
+    "build": "node ./functions/server.mjs"
   },
   "dependencies": {
     "@google/genai": "^1.39.0",
