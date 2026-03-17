@@ -3,6 +3,6 @@
   node_bundler = "esbuild"
 [[redirects]]
   from = "/*"
-  to = "./server/:splat"
+  to = "./server"
   status = 200
   force = true
