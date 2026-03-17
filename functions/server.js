@@ -1,8 +1,8 @@
-import {ejobsScraper} from "./ejobs-scraper.js";
-import {hipoScraper} from "./hipo-scraper.js";
-import {bestjobsScraper} from "./bestjobs-scraper.js";
-import {undelucramScraper} from "./undelucram-scraper.js";
-import {joobleScraper} from "./jooble-scraper.js";
+import {ejobsScraper} from "../ejobs-scraper.js";
+import {hipoScraper} from "../hipo-scraper.js";
+import {bestjobsScraper} from "../bestjobs-scraper.js";
+import {undelucramScraper} from "../undelucram-scraper.js";
+import {joobleScraper} from "../jooble-scraper.js";
 import express from "express";
 import serverless from "serverless-http";
 import path from "path";
@@ -17,7 +17,7 @@ const __dirname = dirname(__filename);
 const app = express();
 
 app.use(express.json({limit: "10mb"}));
-app.use(express.static(path.join(__dirname, "/public")));
+app.use(express.static(path.join(__dirname, "../public")));
 
 const ai = new GoogleGenAI({apiKey: process.env.GEMINI_API_KEY});
 
