@@ -2,7 +2,7 @@
   functions = "functions"
   publish = "public"
 [functions]
-  node_bundler = "esbuild"
+  node_bundler = "zisi"
   included_files = ["public/**"]
   external_node_modules = ["typescript", "kind-of"]
 [[redirects]]
