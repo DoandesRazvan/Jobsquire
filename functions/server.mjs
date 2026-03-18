@@ -4,7 +4,6 @@ import {bestjobsScraper} from "../bestjobs-scraper.js";
 import {undelucramScraper} from "../undelucram-scraper.js";
 import {joobleScraper} from "../jooble-scraper.js";
 import express from "express";
-import serverless from "serverless-http";
 import path from "path";
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -150,4 +149,4 @@ const PORT = process.env.PORT || 3000;
 //   console.log(`Server running on ${PORT}`);
 // });
 
-export const handler = serverless(app);
+export default app;
