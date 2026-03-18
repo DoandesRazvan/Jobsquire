@@ -3,7 +3,7 @@
   publish = "public"
 [functions]
   node_bundler = "zisi"
-  included_files = ["public/**", "functions/server.mjs"]
+  included_files = ["public/**", "functions/server.mjs", "functions/bestjobs-scraper.js", "functions/ejobs-scraper.js", "functions/hipo-scraper.js", "functions/jooble-scraper.js", "functions/undelucram-scraper.js"]
 [[redirects]]
   from = "/*"
   to = "/.netlify/functions/app"
