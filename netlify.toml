@@ -4,6 +4,7 @@
 [functions]
   node_bundler = "esbuild"
   included_files = ["public/**"]
+  external_node_modules = ["typescript"]
 [[redirects]]
   from = "/*"
   to = "/.netlify/functions/app"
