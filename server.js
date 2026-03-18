@@ -1,8 +1,8 @@
-import {ejobsScraper} from "../ejobs-scraper.js";
-import {hipoScraper} from "../hipo-scraper.js";
-import {bestjobsScraper} from "../bestjobs-scraper.js";
-import {undelucramScraper} from "../undelucram-scraper.js";
-import {joobleScraper} from "../jooble-scraper.js";
+import {ejobsScraper} from "./ejobs-scraper.js";
+import {hipoScraper} from "./hipo-scraper.js";
+import {bestjobsScraper} from "./bestjobs-scraper.js";
+import {undelucramScraper} from "./undelucram-scraper.js";
+import {joobleScraper} from "./jooble-scraper.js";
 import express from "express";
 import path from "path";
 import { fileURLToPath } from 'url';
@@ -16,7 +16,7 @@ const __dirname = dirname(__filename);
 const app = express();
 
 app.use(express.json({limit: "10mb"}));
-app.use(express.static(path.join(__dirname, "../public")));
+app.use(express.static(path.join(__dirname, "/public")));
 
 const ai = new GoogleGenAI({apiKey: process.env.GEMINI_API_KEY});
 
@@ -145,8 +145,6 @@ app.post("/jobs", async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 
-// app.listen(PORT, () => {
-//   console.log(`Server running on ${PORT}`);
-// });
-
-export default app;
+app.listen(PORT, () => {
+  console.log(`Server running on ${PORT}`);
+});
