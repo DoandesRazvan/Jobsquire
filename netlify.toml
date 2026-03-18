@@ -4,7 +4,7 @@
 [functions]
   node_bundler = "zisi"
   included_files = ["public/**"]
-  external_node_modules = ["typescript", "kind-of"]
+  external_node_modules = ["typescript", "functions/server.mjs"]
 [[redirects]]
   from = "/*"
   to = "/.netlify/functions/app"
