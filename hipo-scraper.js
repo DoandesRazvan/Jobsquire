@@ -1,7 +1,10 @@
 import puppeteer from "puppeteer";
 
 const hipoScraper = async (role, locations, experience) => {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+        executablePath: '/usr/bin/chromium',
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
+    });
     const page = await browser.newPage();
 
     let jobsList = [];

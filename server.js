@@ -7,7 +7,7 @@ import express from "express";
 import path from "path";
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import {GoogleGenAI} from "@google/genai";
+import {GoogleGenAI, ThinkingLevel} from "@google/genai";
 import fs from "fs";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -48,10 +48,23 @@ app.post("/api/generate", async (req, res) => {
   const { prompt } = req.body;
   let response;
 
+  console.log(prompt);
+
   try {
     response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview", // might need to change ai model due to rate limits (gemma 3 27b is dumb, just tried it)
+      model: "gemini-3.1-flash-lite-preview",
       contents: prompt,
+      config: {
+        thinkingConfig: {
+          thinkingLevel: ThinkingLevel.MINIMAL,
+        },
+      },
+      tools: [
+        {
+          name: "google_search",
+          description: "A tool that uses Google Search to get up-to-date information from the web.",
+        },
+      ],
     });
   } catch(err) {
     res.json({
@@ -125,7 +138,6 @@ app.post("/jobs", async (req, res) => {
           }
           console.log(results);
           break;
-        default: "No company selected"; // default might need to be removed
       }
 
       allJobResults = allJobResults.concat(results);

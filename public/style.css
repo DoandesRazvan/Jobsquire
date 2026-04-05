@@ -113,7 +113,7 @@ button {
         &.info-content-show {
             height: max-content;
         }
-    }  
+    }
 
     #info-content {
         height: max-content;
@@ -127,16 +127,12 @@ button {
         border-radius: 5px;
         margin-top: 5px;
 
-        /* h2 {
-            margin: 0;
-        } */
-
         h2, h3, p {
             font-size: 14px;
         }
 
         h2 {
-            font-weight: 400;
+            font-weight: 500;
             font-size: 18px;
             color: #94d2bd;
             font-family: "Manrope", sans-serif;
@@ -153,79 +149,19 @@ button {
             font-size: 12px;
             color: #2FA88A;
             margin-bottom: 0;
+
+            a {
+                color: #94d2bd;
+                text-decoration: none;
+                font-weight: 400;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
         }
     }
 }
-
-/* #main-ctas {
-    display: flex;
-    align-self: flex-end;
-    
-    .cta {
-        height: 40px;
-        width: 170px;
-        font-family: "Inter", sans-serif;
-        font-weight: 700;
-        font-size: 14px;
-        margin-left: 15px;
-        border-radius: 20px;
-        border: none;
-        transition: all 0.3s ease-out;
-
-        &:nth-child(1) {
-            margin-left: 0;
-        }
-
-        &:hover {
-            font-size: 15px;
-        }
-    }
-
-    #search-jobs-btn {
-        --text-anim-color: white;
-        background: #3B1F14;
-        color: #FF6B3D;
-        border: solid 1px #B14A2E;
-        text-shadow: 1px 1px 15px #B14A2E;
-
-        &:hover {
-            text-shadow: 1px 1px 15px #FF004D;
-        }
-    }
-
-    #market-overview-btn {
-        background: #111B26;
-        color: #1ECFFF;
-        border: solid 1px #3B7FA1;
-        text-shadow: 1px 1px 15px #3B7FA1;
-
-        &:hover {
-            text-shadow: 1px 1px 15px #00FFF0;
-        }
-    }
-
-    #market-news-btn {
-        background: #0D2B1E;
-        color: #00FF7F;
-        border: solid 1px #2FA36B;
-        text-shadow: 1px 1px 15px #2FA36B;
-
-        &:hover {
-            text-shadow: 1px 1px 15px #C6FF00;
-        }
-    }
-
-    #assistance-btn {
-        background: #3A2E1A;
-        color: #FFE066;
-        border: solid 1px #BFA14A;
-        text-shadow: 1px 1px 15px #BFA14A;
-
-        &:hover {
-            text-shadow: 1px 1px 15px #FFB347;
-        }
-    }
-} */
 
 .content-box {
     flex-direction: column;
@@ -472,88 +408,9 @@ button {
     }
 }
 
-/* #jobs-overview {
-    background: #0B1C2D;
-    color: #00AFFF;
-    border: solid 1px #2F6FA3;
-}
-
-#jobs-news {
-    background: #071A10;
-    color: #14FF8A;
-    border: solid 1px #3A9F6B;
-}
-
-#jobs-help {
-    background: #2B1A0F;
-    color: #FF9F1C;
-    border: solid 1px #B36A2E;
-} */
-
 #jobs-search.show, #jobs-overview.show, #jobs-news.show, #jobs-help.show {
     display: flex;
 }
-
-/* .input-area {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-    width: 740px;
-
-    #default-prompts {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        width: 100%;
-
-        button {
-            width: 360px;
-            height: 30px;
-            font-size: 12.5px;
-            font-family: "Inter", sans-serif;
-            font-weight: 500;
-            border-radius: 15px;
-            background: #1B1E23;
-            color: #FF2E88;
-            border: solid 2px #A1446F;
-        }
-    }
-
-    #prompt {
-        width: 740px;
-        height: 60px;
-        border-radius: 10px;
-        padding: 10px 20px;
-        font-size: 18px;
-        font-family: "Manrope", sans-serif;
-        font-weight: 500;
-        font-optical-sizing: auto;
-        background: #0B0C0E;
-        color: #E6E6E6;
-        border: solid 1px #8A8D92;
-        margin-top: 10px;
-    
-        &::placeholder {
-            font-style: italic;
-            padding-bottom: -100px;
-            color: #E6E6E6;
-        }
-    }
-
-    #ask-btn {
-        width: 180px;
-        height: 40px;
-        background: #1D1E20;
-        color: #F7F8FA;
-        border: solid 1px #C7CBD4;
-        border-radius: 5px;
-        font-family: "Inter", sans-serif;
-        font-size: 18px;
-        font-weight: 600;
-        margin-top: 10px;
-    }
-} */
 
 #scraper-content {
     display: flex;
@@ -638,8 +495,6 @@ button {
         z-index: 0;
         backdrop-filter: blur(40px);
         -webkit-backdrop-filter: blur(40px);
-        /* background: rgba(255, 46, 136, 0.05); */
-        /* background: rgba(255, 90, 46, 0.05); */
 
         &::-webkit-scrollbar {
             width: 7px;
@@ -1046,8 +901,4 @@ button {
             }
         } 
     }
-}
-
-@media only screen and (max-width: 360px) {
-    
 }

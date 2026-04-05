@@ -1,7 +1,10 @@
 import puppeteer from "puppeteer";
 
 const ejobsScraper = async (role, locations, experience) => {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+        executablePath: '/usr/bin/chromium',
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
+    });
     const page = await browser.newPage();
 
     let jobsList = [];
@@ -106,13 +109,6 @@ const ejobsScraper = async (role, locations, experience) => {
             let currentUrl = window.location.href;
             let company = "eJobs";
             let isNextPage = document.querySelector(".jobs-list-paginator__button--next") != null ? true : false;
-
-            // return Array.from(jobs).map(child => {
-            //     let title = child.querySelector(".job-card-content-middle__title")?.innerText || null;
-            //     let link = child.querySelector(".job-card-content-middle__title > a")?.href || null;
-
-            //     return {title, link, currentUrl, company};
-            // });
 
             let jobsFound = Array.from(jobs).map(child => {
                 let title = child.querySelector(".job-card-content-middle__title")?.innerText || null;

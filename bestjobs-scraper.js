@@ -1,9 +1,10 @@
-// this side doesn't have pagination - need to figure out how to get all the possible results (page can be scrolled down then "Incarca mai mult" button appears);
-
 import puppeteer from "puppeteer";
 
 const bestjobsScraper = async (role, locations, experience) => {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+        executablePath: '/usr/bin/chromium',
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
+    });
     const page = await browser.newPage();
 
     // creating the URL based on the user search criteria

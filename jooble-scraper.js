@@ -5,7 +5,11 @@ import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 puppeteer.use(StealthPlugin());
 
 const joobleScraper = async (role, locations, experience) => {
-    const browser = await puppeteer.launch({protocolTimeout: 120000});
+    const browser = await puppeteer.launch({
+        executablePath: '/usr/bin/chromium',
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        protocolTimeout: "12000"
+    });
     const page = await browser.newPage();
 
     // creating the URL based on the user search criteria
