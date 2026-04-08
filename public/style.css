@@ -756,7 +756,7 @@ button {
         
         #scraper-content {
             #ai-prompts {
-                .ai-filters {
+                .ai-filters, .reset-button {
                     font-size: 10px;
                     height: 25px;
                 }
@@ -847,7 +847,7 @@ button {
             #ai-prompts {
                 gap: 5px;
                 
-                .ai-filters {
+                .ai-filters, .reset-button {
                     width: 49%;
                     font-size: 7px;
                     height: 20px;
@@ -891,7 +891,7 @@ button {
             justify-content: center;
             align-items: center;
             
-            .ai-filters {
+            .ai-filters, .reset-button {
                 width: 100%;
             }
 
